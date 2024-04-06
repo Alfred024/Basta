@@ -172,3 +172,10 @@ form{
     height: 180%;
     left: -10%;
 }
+
+.error_message{
+    font-weight: lighter;
+    text-align: end;
+    font-size: 20px;
+    color: red;
+}

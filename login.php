@@ -65,10 +65,14 @@
             $estado = $_GET['m'];
             switch ($estado) {
               case 1:
-                  echo("<h5 style='color: red;'> Llene cada uno de los campos.</h5>");
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Llene cada uno de los campos.</h5>");
                 break;
+                
               case 2:
-                  echo("<h5 style='color: red;'> Credenciales inválidas.</h5>");
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Credenciales inválidas.</h5>");
+                break;
+              case 5:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> No te hagas, no estás registrado.</h5>");
                 break;
             }
           }

@@ -8,6 +8,7 @@ Genración de id de sesión
 <!-- 
 1 llene cada uno de los campos
 2 credenciales inválidas
+
 3 correo no exitente
 4 correos duplicado 
 5 no te hagas, no estás registrado 
