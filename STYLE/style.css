@@ -1,0 +1,174 @@
+/*  MODAL */
+.modal-content{
+    background-color: rgb(122, 212, 106);
+    border: none;
+}
+.container-border-radius{
+    border-radius: 20px;
+}
+.green-primary-bg{
+    background-color: rgb(40, 143, 40);
+}
+.green-primary-text{
+    color: rgb(40, 143, 40);
+}
+.red-primary-bg{
+    background-color: rgb(219, 56, 56);
+}
+.red-primary-text{
+    color: rgb(223, 109, 109);
+}
+.box-shadow-cards{
+    box-shadow: -2px 2px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -2px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+.border-radius-30{
+    border-radius: 30px;
+}
+.btn-card-style{
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: solid black 1px;
+    background-color: transparent;
+    color: black;
+}
+
+/* MEDIA QUERIES */
+form{
+    width: 50%;
+}
+@media (max-width: 700px) {
+    form{
+        width: 400px;
+    }
+}
+@media (max-width: 400px) {
+    form{
+        width: 300px;
+    }
+}
+
+/* ESTILOS BOTONES */
+.button-mine{
+    /* padding: 10px 15px; */
+    width: 120px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    place-items: center;
+    letter-spacing: 3px;
+}
+
+/* Botón gradiante */
+.gradient{
+    background-image: linear-gradient(to right, rgb(247, 193, 56), rgb(179, 172, 67) 55%);
+    background-size: 200%;
+}
+.gradient:hover{
+    transition: 0.5s ease-out;
+    background-position: center;
+}
+
+
+/*Botón no c*/
+.normal{
+    position: relative;
+    background-color: black;
+    transition: 0.5s;
+}
+.normal:hover{
+    transform: translate(10px, -1px);
+}
+.normal::before, .normal::after{
+    content: "";
+    position: absolute;
+    background: black;
+    opacity: 0.3;
+    width: 90%;
+    height: 100%;
+    border-radius: inherit; 
+    z-index: -1;
+}
+.normal:hover::before{
+    transition: 0.5s;
+    display: block;
+    transform: translate(-9px, 6px);
+}
+.normal:hover::after{
+    transition: 0.5s;
+    display: block;
+    transform: translate(-16px, 11px);
+}
+
+/*Botón Neón*/
+/* box shadow: (horizontal offset) (vertical offset) (blur) (colour)*/
+.neon{
+    background-color: #d3359e;
+    border: solid #a70777;
+    transition: 0.5s;
+}
+.neon:hover{
+    color: 842559;
+    background-color: #d158ac;
+    box-shadow: 0 0 10px #d158ac, 0 0 30px #d158ac, 0 0 70px #d158ac;
+}
+
+/*Botón Doble*/
+.double{
+    background-color: unset;
+    color: black;
+    border-radius: 0px;
+    border: solid black 1px;
+    position: relative;
+}
+.double::before, .double::after{
+    content: "";
+    position: absolute;
+    border: solid black 1px;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.6s;
+}
+.double:hover{
+    border: none;
+}
+.double:hover:before{
+    transform: translate(-5px, -5px);
+    z-index: 1;
+}
+.double:hover:after{
+    transform: translate(5px, 5px);
+    z-index: 1;
+}
+
+/*Botón con Agua*/
+.agua{
+    background-color: unset;
+    color: rgb(30, 5, 101);
+    font-weight: 700;
+    border-radius: 10px 0px;
+    border: solid rgb(30, 5, 101) 1px;
+    position: relative;
+    overflow: hidden;
+}
+.agua::before, .agua::after{
+    content: "";
+    position: absolute;
+    border-radius: 0px 20px;
+    background-color: lightblue;
+    width: 100%;
+    height: 0%;
+    left: -40%;
+    bottom: 0;
+    z-index: -1;
+    transition: 1.3s;
+}
+.agua:hover::before{
+    width: 220%;
+    height: 180%;
+    left: -10%;
+}
