@@ -42,16 +42,16 @@
     </header>
  
     <main>
-      <form method="post" class="mx-auto p-3">
+      <form  method="post" action="./classes/class_access.php" class="mx-auto p-3">
         <div class="form-group">
           <label for="exampleInputEmail1">Nombre</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el nombre">
+          <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el nombre">
           
         </div>        
 
         <div class="form-group">
           <label for="exampleInputEmail1">Apellido</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el apellido">
+          <input name="last_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el apellido">
           
         </div>
 
@@ -88,6 +88,25 @@
           
         </div>  
 
+        <?php 
+          if (isset($_GET['m'])) {
+            $estado = $_GET['m'];
+            switch ($estado) {
+              case 1:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Llene cada uno de los campos.</h5>");
+                break;
+                
+              case 7:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> No se pudo enviar el correo.</h5>");
+                break;
+              case 8:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Su registro se completó exitosamente. Verifique su correo para obtener su clave.</h5>");
+                break;
+            }
+          }
+        ?>
+
+        <input type="hidden" name="action" value="register">
         <button type="submit" class="btn btn-primary">Registrarse</button>
       </form>
     </main>

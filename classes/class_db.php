@@ -25,7 +25,11 @@
         function query($queryP){
             $this->open();
             $this->registrersBlock=mysqli_query($this->connection,$queryP);
-            $this->registersNum=mysqli_num_rows($this->registrersBlock);
+
+            if(strpos('SELECT', strtoupper($queryP)) === true){
+                $this->registersNum=mysqli_num_rows($this->registrersBlock);
+            };
+
             $this->close();
         }
 
