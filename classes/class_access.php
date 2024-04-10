@@ -1,4 +1,4 @@
-<?php 
+<?php
     include "../classes/class_db.php";
     session_start();
 
@@ -40,13 +40,17 @@
             $password = $_REQUEST['password'];
             $captcha = $_REQUEST['captcha'];
 
-            if (!is_numeric($captcha) || $_SESSION['captcha_login'] !== $captcha) 
-                header("location: ../login.php?m=x"); // MOSTRAR "CAPTCHA INCORRECTO"
+            if($email != null && $password != null && $captcha != null){
 
-            if($email != null && $password != null){
+                if ($_SESSION['captcha_login'] != $captcha){
+                    header("location: ../login.php?m=6");
+                    return;
+                }
+
                 $databaseX = new MYSQL_DB();
                 $querySelectUser = "select * from usuario where email='{$email}' and clave='{$password}'";
                 $databaseX->query($querySelectUser);
+                $databaseX->getRecord($querySelectUser);
 
                 if ($databaseX->registersNum == 1){
                     $data =  $databaseX->getRecord($querySelectUser);
@@ -61,7 +65,7 @@
                     };
                 }else{
                     $querySelectUser = "select * from usuario where email='{$email}'";
-                    // $databaseX->getRecord($querySelectUser);
+                    $databaseX->getRecord($querySelectUser);
                     $databaseX->query($querySelectUser);
 
                     if ($databaseX->registersNum == 1){
@@ -77,69 +81,73 @@
         }
 
         function register() {
-            include("../resources/class.phpmailer.php");
-            include("../resources/class.smtp.php");
+            $captcha = $_REQUEST['captcha'];
 
-            $cadena="ABCDEFGHIJKLMNPQRSTUVWXYZ123456789123456789";
-            $numeC=strlen($cadena);
-            $nuevPWD="";
-            for ($i=0; $i<8; $i++){
-                $nuevPWD.=$cadena[rand()%$numeC]; 
+            if (!is_numeric($captcha) || $_SESSION['captcha_login'] != $captcha){
+                header("location: ../login.php?m=6");
             }
-
-            $databaseX = new MYSQL_DB();
-            // if ( findUserByEmail($_REQUEST['email']) ){
-            //     // BREAK O ARROJAR UN MENSAJE DE QUE YA ESTÁ REGISTRADO
+            
+            // if ( $this->isEmailRegistered($_REQUEST['email']) === true ){
+            //     header("location: ../register.php?m=2");
             // }
-            // BUSCAR QUE EL USUARIO NO ESTÉ REGISTRADO
 
-            $query="insert into usuario set nombre='".$_REQUEST['name']."', apellidos='".$_REQUEST['last_name']."', email='".$_REQUEST['email']."', clave=password('".$nuevPWD."')";
+            // include("../resources/class.phpmailer.php");
+            // include("../resources/class.smtp.php");
+            
+            // $cadena="ABCDEFGHIJKLMNPQRSTUVWXYZ123456789123456789";
+            // $numeC=strlen($cadena);
+            // $nuevPWD="";
+            // for ($i=0; $i<8; $i++){
+            //     $nuevPWD.=$cadena[rand()%$numeC]; 
+            // }
+            
+            // $databaseX = new MYSQL_DB();
+            // $query="insert into usuario set nombre='".$_REQUEST['name']."', apellidos='".$_REQUEST['last_name']."', email='".$_REQUEST['email']."', clave=password('".$nuevPWD."')";
 
-            $mail = new PHPMailer();
-            $mail->IsSMTP();
-            $mail->Host="smtp.gmail.com"; 
-            // $mail->SMTPSecure = 'tls';
-            // $mail->Port = 587;
-            $mail->SMTPSecure = 'ssl'; 
-            $mail->Port = 465;    
-            $mail->SMTPDebug  = 1;  
-            $mail->SMTPAuth = true;   
-            $mail->Username =   "21030761@itcelaya.edu.mx"; 
-            $mail->Password = "jgva azoe wfaf xoyj";  
+            // $mail = new PHPMailer();
+            // $mail->IsSMTP();
+            // $mail->Host="smtp.gmail.com"; 
+            // // $mail->SMTPSecure = 'tls';
+            // // $mail->Port = 587;
+            // $mail->SMTPSecure = 'ssl'; 
+            // $mail->Port = 465;    
+            // $mail->SMTPDebug  = 1;  
+            // $mail->SMTPAuth = true;   
+            // $mail->Username =   "21030761@itcelaya.edu.mx"; 
+            // $mail->Password = "jgva azoe wfaf xoyj";  
                 
-            $mail->From="21030761@itcelaya.edu.mx";
-            $mail->FromName="Alfredo";
-            $mail->Subject = "Registro completo";
-            $mail->MsgHTML("<h1>BIENVENIDO ".$_REQUEST['name']." ".$_REQUEST['last_name']."</h1><h2> tu clave de acceso es : ".$nuevPWD."</h2>");
-            $mail->AddAddress($_REQUEST['email']);
-            $mail->AddAddress("admin@admin.com");
+            // $mail->From="21030761@itcelaya.edu.mx";
+            // $mail->FromName="Alfredo";
+            // $mail->Subject = "Registro completo";
+            // $mail->MsgHTML("<h1>BIENVENIDO ".$_REQUEST['name']." ".$_REQUEST['last_name']."</h1><h2> tu clave de acceso es : ".$nuevPWD."</h2>");
+            // $mail->AddAddress($_REQUEST['email']);
+            // $mail->AddAddress("admin@admin.com");
 
             // $databaseX->query($query);
             // header("location: ../register.php?m=8"); 
 
-            echo(var_dump($mail));
-            if (!$mail->Send()){
-                echo  "Error sending the email: " . $mail->ErrorInfo;
-            } else { 
-                $databaseX->query($query);
-                // $result=mysqli_query($conexion,$query);
-                header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE
-            }
+            // if (!$mail->Send()){
+            //     echo  "Error sending the email: " . $mail->ErrorInfo;
+            // } else { 
+            //     $databaseX->query($query);
+            //     // $result=mysqli_query($conexion,$query);
+            //     header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE
+            // }
         }
 
         function recoverPwd(){
             // UPDATE usuario 
         }
 
-        function findUserByEmail ($email_p) : bool{
+        function isEmailRegistered($email_p) : bool{
             $databaseX = new MYSQL_DB();
             $querySelectUser = "select * from usuario where email='{$email_p}'";
             $databaseX->query($querySelectUser);
 
             if ($databaseX->registersNum == 1){
-                return true; // Hacer que siga el flujo 
+                return true;
             }else{
-                throw new Exception("User with email ".$email_p." is not register", 400);
+                return false;
             }
         }
 

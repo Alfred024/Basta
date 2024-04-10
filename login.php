@@ -9,9 +9,9 @@
     $operador1 = $operadores[rand(0,2)];
     $operador2 = $operadores[rand(0,2)];
 
-    $num1 = rand(0,9);
-    $num2 = rand(0,9);
-    $num3 = rand(0,9);
+    $num1 = rand(1,7);
+    $num2 = rand(1,7);
+    $num3 = rand(1,7);
 
     $res = calculateOperation($num1, $num2, $operador1);
     $res = calculateOperation($res, $num2, $operador2);
@@ -36,7 +36,7 @@
   $_SESSION['captcha_register'] = $resRegister;
   $_SESSION['captcha_recoverPwd'] = $resRecoverPwd;
 
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
   echo('RES LOGIN: '.$resLogin);
 ?>
 
@@ -97,6 +97,7 @@
           <input name="captcha" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Favor de resolver la siguiente operación: <?php echo($captchaLogin) ?>">
         </div> 
 
+        <!-- Mensajes de error del server -->
         <?php 
           if (isset($_GET['m'])) {
             $estado = $_GET['m'];
@@ -104,12 +105,14 @@
               case 1:
                   echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Llene cada uno de los campos.</h5>");
                 break;
-                
               case 2:
                   echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Credenciales inválidas.</h5>");
                 break;
               case 5:
                   echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> No te hagas, no estás registrado.</h5>");
+                break;
+              case 6:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Por favor, compruebe el campo del captcha.</h5>");
                 break;
             }
           }
