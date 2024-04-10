@@ -80,76 +80,98 @@
         }
 
         function register() {
+            $email = $_REQUEST['email'];
+            $name = $_REQUEST['name'];
+            $last_name = $_REQUEST['last_name'];
             $captcha = $_REQUEST['captcha'];
 
-            if (!is_numeric($captcha) || $_SESSION['captcha_login'] != $captcha){
-                header("location: ../login.php?m=6");
+            if($email != null && $name != null && $last_name != null && $captcha != null){
+                if ($_SESSION['captcha_register'] != $captcha){
+                    header("location: ../register.php?m=6");
+                    return;
+                }
+                
+                if ( $this->isEmailRegistered($email) === true ){
+                    header("location: ../register.php?m=2");
+                    return;
+                }
+    
+                include("../resources/class.phpmailer.php");
+                include("../resources/class.smtp.php");
+                
+                $passwordGenereated = $this->generatePwd();
+                
+                $databaseX = new MYSQL_DB();
+                $query="insert into usuario set nombre='".$_REQUEST['name']."', apellidos='".$_REQUEST['last_name']."', email='".$_REQUEST['email']."', clave=password('".$passwordGenereated."')";
+    
+                $mail = new PHPMailer();
+                $mail->IsSMTP();
+                $mail->Host="smtp.gmail.com"; 
+                // $mail->SMTPSecure = 'tls';
+                // $mail->Port = 587;
+                $mail->SMTPSecure = 'ssl'; 
+                $mail->Port = 465;    
+                $mail->SMTPDebug  = 1;  
+                $mail->SMTPAuth = true;   
+                $mail->Username =   "21030761@itcelaya.edu.mx"; 
+                $mail->Password = "jgva azoe wfaf xoyj";  
+                    
+                $mail->From="21030761@itcelaya.edu.mx"; // ???
+                $mail->FromName="Alfredo"; // ???
+                $mail->Subject = "Registro completo";
+                $mail->MsgHTML("<h1>BIENVENIDO ".$_REQUEST['name']." ".$_REQUEST['last_name']."</h1><h2> tu clave de acceso es : ".$passwordGenereated."</h2>");
+                $mail->AddAddress($_REQUEST['email']); // ???
+                $mail->AddAddress("admin@admin.com"); // ???
+    
+                $databaseX->query($query);
+                header("location: ../register.php?m=8"); 
+    
+                // if (!$mail->Send()){
+                //     echo  "Error sending the email: " . $mail->ErrorInfo;
+                // } else { 
+                //     $databaseX->query($query);
+                //     // $result=mysqli_query($conexion,$query);
+                //     header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE (m=2 de error)
+                // }
+            }else{
+                header("location: ../register.php?m=1");
             }
-            
-            if ( $this->isEmailRegistered($_REQUEST['email']) === true ){
-                header("location: ../register.php?m=2");
-            }
+        }
 
-            include("../resources/class.phpmailer.php");
-            include("../resources/class.smtp.php");
-            
+        function recoverPwd(){
+            $email = $_REQUEST['email'];
+            $captcha = $_REQUEST['captcha'];
+
+            if($email != null && $captcha != null){
+                if ($_SESSION['captcha_recoverPwd'] != $captcha){
+                    header("location: ../password-recover.php?m=6");
+                    return;
+                }
+
+                if($this->isEmailRegistered($email)){
+                    // TODO: Genera una nueva contraseña y envía un correo de recuperación
+                }else{
+                    header("location: ../password-recover.php?m=5"); // No registrado
+                }
+            }else{
+                header("location: ../password-recover.php?m=1");
+            }
+        }
+
+        function generatePwd() : string {
             $cadena="ABCDEFGHIJKLMNPQRSTUVWXYZ123456789123456789";
             $numeC=strlen($cadena);
             $nuevPWD="";
             for ($i=0; $i<8; $i++){
                 $nuevPWD.=$cadena[rand()%$numeC]; 
             }
-            
-            $databaseX = new MYSQL_DB();
-            $query="insert into usuario set nombre='".$_REQUEST['name']."', apellidos='".$_REQUEST['last_name']."', email='".$_REQUEST['email']."', clave=password('".$nuevPWD."')";
-
-            $mail = new PHPMailer();
-            $mail->IsSMTP();
-            $mail->Host="smtp.gmail.com"; 
-            // $mail->SMTPSecure = 'tls';
-            // $mail->Port = 587;
-            $mail->SMTPSecure = 'ssl'; 
-            $mail->Port = 465;    
-            $mail->SMTPDebug  = 1;  
-            $mail->SMTPAuth = true;   
-            $mail->Username =   "21030761@itcelaya.edu.mx"; 
-            $mail->Password = "jgva azoe wfaf xoyj";  
-                
-            $mail->From="21030761@itcelaya.edu.mx";
-            $mail->FromName="Alfredo";
-            $mail->Subject = "Registro completo";
-            $mail->MsgHTML("<h1>BIENVENIDO ".$_REQUEST['name']." ".$_REQUEST['last_name']."</h1><h2> tu clave de acceso es : ".$nuevPWD."</h2>");
-            $mail->AddAddress($_REQUEST['email']);
-            $mail->AddAddress("admin@admin.com");
-
-            $databaseX->query($query);
-            header("location: ../register.php?m=8"); 
-
-            // if (!$mail->Send()){
-            //     echo  "Error sending the email: " . $mail->ErrorInfo;
-            // } else { 
-            //     $databaseX->query($query);
-            //     // $result=mysqli_query($conexion,$query);
-            //     header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE
-            // }
-        }
-
-        function recoverPwd(){
-            $email = $_REQUEST['email'];
-            // 1.- Comprobar que el email está regstrado
-            if($this->isEmailRegistered($email)){
-                // 1.1.- Comprobar que los cmapos se hayan llenado 
-
-                // 1.2.- Comprobar que el captcha sea correcto
-            }else{
-                header("location: ../password-recover.php?m=5"); // No registrado
-            }
-            // 2.- UPDATE del usuario con el email 
+            return $nuevPWD;
         }
 
         function isEmailRegistered($email_p) : bool{
             $databaseX = new MYSQL_DB();
             $querySelectUser = "select * from usuario where email='{$email_p}'";
+            $databaseX->getRecord($querySelectUser);
             $databaseX->query($querySelectUser);
 
             if ($databaseX->registersNum == 1){
