@@ -1,3 +1,46 @@
+<?php
+  session_start();
+  session_unset();
+
+  function getCaptcha(&$res){
+    $operadores = array('+','-','x');
+    //$operadores = "+-x";
+
+    $operador1 = $operadores[rand(0,2)];
+    $operador2 = $operadores[rand(0,2)];
+
+    $num1 = rand(0,9);
+    $num2 = rand(0,9);
+    $num3 = rand(0,9);
+
+    $res = calculateOperation($num1, $num2, $operador1);
+    $res = calculateOperation($res, $num2, $operador2);
+
+    $captcha = $num1 . $operador1 . $num2 . $operador2 . $num3;
+    return $captcha;
+  }
+
+  function calculateOperation($numA, $numB, $operador){
+    if($operador == "+") return $numA + $numB;
+    if($operador == "-") return $numA - $numB;
+    return $numA * $numB;
+  }
+
+
+  $resLogin=$resRegister=$resRecoverPwd = 0;
+
+  $captchaLogin = getCaptcha($resLogin);
+  $captchaRegister = getCaptcha($resRegister);
+  $captchaRecoverPwd = getCaptcha($resRecoverPwd);
+
+  $_SESSION['captcha_login'] = $resLogin;
+  $_SESSION['captcha_register'] = $resRegister;
+  $_SESSION['captcha_recoverPwd'] = $resRecoverPwd;
+
+  var_dump($_SESSION);
+  echo('RES REGISTER: '.$resRegister);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +104,6 @@
           
         </div>
 
-
         <!-- <div class="form-group">
           <label for="exampleInputPassword1">Contraseña</label>
           <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingresa la contraseña">
@@ -81,11 +123,10 @@
             </label>
           </div>
         </div>
-
+        <!-- TODO: Implementar captcha -->
         <div class="form-group">
           <label for="exampleInputEmail1">Captcha</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el Captcha">
-          
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Favor de resolver la siguiente operación: <?php echo($captchaRegister) ?>">
         </div>  
 
         <?php 

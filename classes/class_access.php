@@ -1,6 +1,5 @@
 <?php 
     include "../classes/class_db.php";
-
     session_start();
 
     class Access extends MYSQL_DB{
@@ -19,6 +18,9 @@
                 case 'register':
                     $this->register();
                 break;
+                case 'recoverPwd':
+                    $this->recoverPwd();
+                break;
                 case 'record':
                 
                 break;
@@ -33,21 +35,13 @@
             return $actionReult;
         }
 
-        function findUserByEmail ($email_p) : bool{
-            $databaseX = new MYSQL_DB();
-            $querySelectUser = "select * from usuario where email='{$email_p}'";
-            $databaseX->query($querySelectUser);
-
-            if ($databaseX->registersNum == 1){
-                return true; // Hacer que siga el flujo 
-            }else{
-                throw new Exception("User with email ".$email_p." is not register", 400);
-            }
-        }
-
         function login() {
             $email = $_REQUEST['email'];
             $password = $_REQUEST['password'];
+            $captcha = $_REQUEST['captcha'];
+
+            if (!is_numeric($captcha) || $_SESSION['captcha_login'] !== $captcha) 
+                header("location: ../login.php?m=x"); // MOSTRAR "CAPTCHA INCORRECTO"
 
             if($email != null && $password != null){
                 $databaseX = new MYSQL_DB();
@@ -83,8 +77,8 @@
         }
 
         function register() {
-            include("../class.phpmailer.php");
-            include("../class.smtp.php");
+            include("../resources/class.phpmailer.php");
+            include("../resources/class.smtp.php");
 
             $cadena="ABCDEFGHIJKLMNPQRSTUVWXYZ123456789123456789";
             $numeC=strlen($cadena);
@@ -99,22 +93,19 @@
             // }
             // BUSCAR QUE EL USUARIO NO ESTÉ REGISTRADO
 
-            $cad="insert into usuario set nombre='".$_REQUEST['name']."', apellidos='".$_REQUEST['last_name']."', email='".$_REQUEST['email']."', clave=password('".$nuevPWD."')";
+            $query="insert into usuario set nombre='".$_REQUEST['name']."', apellidos='".$_REQUEST['last_name']."', email='".$_REQUEST['email']."', clave=password('".$nuevPWD."')";
 
             $mail = new PHPMailer();
             $mail->IsSMTP();
-            $mail->Host="smtp.gmail.com"; //mail.google
-            $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+            $mail->Host="smtp.gmail.com"; 
             // $mail->SMTPSecure = 'tls';
-            $mail->Port = 465;     // set the SMTP port for the GMAIL server
             // $mail->Port = 587;
-            $mail->SMTPDebug  = 1;  // enables SMTP debug information (for testing)
-            $mail->SMTPAuth = true;   //enable SMTP authentication
-                
-            // //  $mail->Username =   "francisco.gutierrez@itcelaya.edu.mx"; // SMTP account username
-            // //  $mail->Password = "cosita";  // SMTP account password
-            $mail->Username =   "21030761@itcelaya.edu.mx"; // SMTP account username
-            $mail->Password = "jgva azoe wfaf xoyj";  // SMTP account password
+            $mail->SMTPSecure = 'ssl'; 
+            $mail->Port = 465;    
+            $mail->SMTPDebug  = 1;  
+            $mail->SMTPAuth = true;   
+            $mail->Username =   "21030761@itcelaya.edu.mx"; 
+            $mail->Password = "jgva azoe wfaf xoyj";  
                 
             $mail->From="21030761@itcelaya.edu.mx";
             $mail->FromName="Alfredo";
@@ -123,24 +114,77 @@
             $mail->AddAddress($_REQUEST['email']);
             $mail->AddAddress("admin@admin.com");
 
-            $databaseX->query($cad);
-                // $result=mysqli_query($conexion,$cad);
-            header("location: ../register.php?m=8"); 
+            // $databaseX->query($query);
+            // header("location: ../register.php?m=8"); 
 
-            // echo(var_dump($mail));
-            // if (!$mail->Send()){
-            //     echo  "Error sending the email: " . $mail->ErrorInfo;
-            // } else { 
-            //     $databaseX->query($cad);
-            //     // $result=mysqli_query($conexion,$cad);
-            //     header("location: ../register.php?m=8"); 
-            // }
+            echo(var_dump($mail));
+            if (!$mail->Send()){
+                echo  "Error sending the email: " . $mail->ErrorInfo;
+            } else { 
+                $databaseX->query($query);
+                // $result=mysqli_query($conexion,$query);
+                header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE
+            }
         }
 
+        function recoverPwd(){
+            // UPDATE usuario 
+        }
+
+        function findUserByEmail ($email_p) : bool{
+            $databaseX = new MYSQL_DB();
+            $querySelectUser = "select * from usuario where email='{$email_p}'";
+            $databaseX->query($querySelectUser);
+
+            if ($databaseX->registersNum == 1){
+                return true; // Hacer que siga el flujo 
+            }else{
+                throw new Exception("User with email ".$email_p." is not register", 400);
+            }
+        }
+
+        function generateCaptcha($page){
+            $operadores = array('+','-','x');
+
+            $operador1 = $operadores[rand(0,2)];
+            $operador2 = $operadores[rand(0,2)];
+
+            $num1 = rand(0,9);
+            $num2 = rand(0,9);
+            $num3 = rand(0,9);
+
+            $res = calculateOperation($num1, $num2, $operador1);
+            $res = calculateOperation($res, $num2, $operador2);
+
+            $captcha = $num1 . $operador1 . $num2 . $operador2 . $num3;
+
+            switch ($page) {
+                case 'login.php':
+                    $_SESSION['captcha_login_res'] = $res;
+                    $_SESSION['captcha_login_string'] = $captcha;
+                    break;
+                case 'register.php':
+                    $_SESSION['captcha_register_res'] = $res;
+                    $_SESSION['captcha_register_string'] = $captcha;
+                case 'password-recover.php':
+                    $_SESSION['captcha_password-recover_res'] = $res;
+                    $_SESSION['captcha_password-recover_string'] = $captcha;
+                default:
+                    header("location: ../login.php");
+                    break;
+            }
+        }
+
+        function calculateOperation($numA, $numB, $operador){
+            if($operador == "+") return $numA + $numB;
+            if($operador == "-") return $numA - $numB;
+            return $numA * $numB;
+        }
+    
     }
 
-    // var_dump muesytarel contenido de un objeto
-    // var_dump($_POST); 
+    // $databaseX = new MYSQL_DB();
+
     $newAccess = new Access();
     if(isset($_REQUEST['action'])){
         echo $newAccess->action($_REQUEST['action']);
