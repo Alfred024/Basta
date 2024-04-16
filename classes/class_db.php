@@ -44,6 +44,23 @@
             $this->close();
             return mysqli_fetch_object($this->registrersBlock);
         }
+
+        // function getFields(&$fields){
+        //     $fields=array();
+        //     for ($campoN=0; $campoN < 2; $campoN++) { 
+                
+        //     }
+        // }
+        function campos(&$campos){
+            $campos=array();
+            //for($campoN=0; $campoN<mysqli_num_fields($this->registersNum); $campoN++){
+            for($campoN=0; $campoN<2; $campoN++){
+                $campo=mysqli_fetch_field_direct($this->registrersBlock ,$campoN);
+                $tabla=$campo->table;
+                array_push($campos,$campo->name);
+            }
+            return $tabla;
+        }
     }
 
     $database = new MYSQL_DB();
