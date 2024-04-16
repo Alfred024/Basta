@@ -1,3 +1,7 @@
+<?php 
+    include '../envs.php';
+?>
+
 <?php
     class MYSQL_DB{
         var $connection;
@@ -9,8 +13,8 @@
         var $registersNum; 
 
         function __construct(){
-            $this-> password="123";  //para acceder a cualquier elemento de la clase se usa $this->;
-            $this-> user="admin_basta";
+            $this-> password=getenv('DB_PASSWORD');  //para acceder a cualquier elemento de la clase se usa $this->;
+            $this-> user=getenv('DB_USER');
             $this-> database="basta";
             $this-> server="localhost";
         }
