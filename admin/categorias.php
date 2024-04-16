@@ -13,3 +13,13 @@
         echo $categoryObject->action($_REQUEST['action']);
     }
 ?>
+
+<?php
+    if (isset($_REQUEST['action'])){
+        echo $categoryObject->action($_REQUEST['action']);
+    }else{
+        header('location: ../html/index.php?m=5');
+    }
+
+    include "../classes/class_category.php";
+?>

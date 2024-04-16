@@ -32,20 +32,18 @@
         }
 
         function displayData($query){
-            // $databaseX = new MYSQL_DB();
-            // $querySelectUser = "select * from usuario where email='{$email}' and clave='{$password}'";
-            // $databaseX->query($querySelectUser);
-            // $databaseX->getRecord($querySelectUser);
+            $html = "";
+            $this->query($query);
+            $this->getRecord($query);
 
-            return 'DESPLIEGA LA DATA DE CATEGORÍA';
-            // $html = "";
-            // $this->query($query);
-            // foreach($this->registrersBlock as $row){
-            //     foreach($row as $fieldRow){
-            //         $html += $fieldRow;
-            //     }
-            // }
-            // return $html;
+            foreach($this->registrersBlock as $row){
+                foreach($row as $fieldRow){
+                    $html .= $fieldRow." ";
+                }
+                $html .= "<br>";
+            }
+            //return $html;
+            echo($html);
         }
     }
 
@@ -53,11 +51,6 @@
     if(isset($_REQUEST['action'])){
         echo $newAccess->action($_REQUEST['action']);
     }else{
-        echo $categoryObject->action('report'); // de dónde salía oCategoría???
+        echo $categoryObject->action('report');
     }
-
-    // $newAccess = new Access();
-    // if(isset($_REQUEST['action'])){
-    //     echo $newAccess->action($_REQUEST['action']);
-    // }
 ?>

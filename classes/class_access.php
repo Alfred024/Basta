@@ -46,31 +46,30 @@
                     return;
                 }
 
-                $databaseX = new MYSQL_DB();
                 $querySelectUser = "select * from usuario where email='{$email}' and clave='{$password}'";
-                $databaseX->query($querySelectUser);
-                $databaseX->getRecord($querySelectUser);
+                $this->query($querySelectUser);
+                $this->getRecord($querySelectUser);
 
-                if ($databaseX->registersNum == 1){
-                    $data =  $databaseX->getRecord($querySelectUser);
+                if ($this->registersNum == 1){
+                    $data =  $this->getRecord($querySelectUser);
                     $_SESSION['session_email'] = $data->email;
                     $_SESSION['session_password'] = $data->clave;
                     $_SESSION['session_username'] = $data->nombre;
 
                     // TODO: Verificar cómo llega el tipo_usuario (tipo de dato)
-                    header("location: ../admin/home.php");
+                    //header("location: ../admin/home.php");
 
-                    // match($data->tipo_usuario){
-                    //     '1' => header("location: ../normal/home.php"),
-                    //     '2' => header("location: ../admin/home.php"),
-                    //     default => header("location: ../normal/home.php")
-                    // };
+                    match($data->tipo_usuario){
+                        '1' => header("location: ../normal/home.php"),
+                        '2' => header("location: ../admin/home.php"),
+                        default => header("location: ../normal/home.php")
+                    };
                 }else{
                     $querySelectUser = "select * from usuario where email='{$email}'";
-                    $databaseX->getRecord($querySelectUser);
-                    $databaseX->query($querySelectUser);
+                    $this->getRecord($querySelectUser);
+                    $this->query($querySelectUser);
 
-                    if ($databaseX->registersNum == 1){
+                    if ($this->registersNum == 1){
                         header("location: ../login.php?m=2"); // Credenciales incorrectas
                     }else{
                         header("location: ../login.php?m=5"); // No registrado

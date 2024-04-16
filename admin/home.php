@@ -1,12 +1,15 @@
-<?php 
+<?php
     session_start();
-    
-    // if(!isset($_SESSION['session_email']) || $_SESSION['admin'] == FALSE){
-    //     header("location: ../login.php");
-    // }
+    // if (!isset($_SESSION['session_email']) || $_SESSION['admin'] === FALSE) {
+    if (!isset($_SESSION['session_email'])) {
+        header("../login.php?=x"); // NO tienes acceso a esta página sin un login
+    }
 
-    if(!isset($_SESSION['session_email'])){
-        header("location: ../login.php");
+    include '../classes/class_category.php';
+    if (isset($_REQUEST['action'])){
+        echo $categoryObject->action($_REQUEST['action']);
+    }else{
+        echo $categoryObject->action("report");
     }
 ?>
 
