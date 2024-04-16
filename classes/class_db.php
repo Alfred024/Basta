@@ -41,5 +41,6 @@
             return mysqli_fetch_object($this->registrersBlock);
         }
     }
-    
+
+    $database = new MYSQL_DB();
 ?>

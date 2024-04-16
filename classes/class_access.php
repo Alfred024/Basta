@@ -57,11 +57,14 @@
                     $_SESSION['session_password'] = $data->clave;
                     $_SESSION['session_username'] = $data->nombre;
 
-                    match($data->tipo_usuario){
-                        '1' => header("location: ../normal/home.php"),
-                        '2' => header("location: ../admin/home.php"),
-                        default => header("location: ../normal/home.php")
-                    };
+                    // TODO: Verificar cómo llega el tipo_usuario (tipo de dato)
+                    header("location: ../admin/home.php");
+
+                    // match($data->tipo_usuario){
+                    //     '1' => header("location: ../normal/home.php"),
+                    //     '2' => header("location: ../admin/home.php"),
+                    //     default => header("location: ../normal/home.php")
+                    // };
                 }else{
                     $querySelectUser = "select * from usuario where email='{$email}'";
                     $databaseX->getRecord($querySelectUser);

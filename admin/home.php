@@ -1,8 +1,12 @@
 <?php 
     session_start();
     
+    // if(!isset($_SESSION['session_email']) || $_SESSION['admin'] == FALSE){
+    //     header("location: ../login.php");
+    // }
+
     if(!isset($_SESSION['session_email'])){
-        header("location: ./login.php");
+        header("location: ../login.php");
     }
 ?>
 
@@ -12,9 +16,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home admin</title>
+
     <!-- STYLES CSS -->
     <link rel="stylesheet" href="https://alfred024.github.io/CSS-mio/styles.css">
     <link rel="stylesheet" href="../styles/global.css">
+
     <!-- Font Awesome -->
     <script
       src="https://kit.fontawesome.com/cdb751df44.js"
@@ -29,7 +35,7 @@
                 <div class="flex">
                     <img class="margin-right-10" src="https://www.svgrepo.com/show/295402/user-profile.svg" alt="User profile picture" style="width: 35px;">
 
-                    <h4 class="Page-Title text-white align-self-center margin-left-5">Bienvenido <?= $_SESSION['session_username'] ?></h4>
+                    <h4 class="Page-Title text-white align-self-center margin-left-5">Bienvenido admin <?= $_SESSION['session_username'] ?></h4>
                 </div>
                 
                 <button onclick="displayAsideNavBar()" class="Nav-Bar-Toogle-Button bg-bolor-unset border-none margin-right-10 cursor-pointer display-none">
@@ -41,7 +47,7 @@
         <?php include('./navbar.php') ?>
     </div>
 
-    <script>
+    <!-- <script>
         // Manejar el display del asideBar
         var asideBar = document.getElementById('Aside-Bar');
         var mediaQuery = window.matchMedia('(min-width: 750px)');
@@ -62,6 +68,6 @@
                 asideBar.style.display = 'block';
             }
         }
-    </script> 
+    </script>  -->
 </body>
 </html>
