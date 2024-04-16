@@ -1,0 +1,65 @@
+ /* MODAL*/
+/* .modal-content{
+    background-color: rgb(122, 212, 106);
+    border: none;
+}
+.container-border-radius{
+    border-radius: 20px;
+}
+.green-primary-bg{
+    background-color: rgb(40, 143, 40);
+}
+.green-primary-text{
+    color: rgb(40, 143, 40);
+}
+.red-primary-bg{
+    background-color: rgb(219, 56, 56);
+}
+.red-primary-text{
+    color: rgb(223, 109, 109);
+} */
+
+/* HOME PAGE CSS */
+.Aside-Bar a, .Aside-Bar ul a:visited, .Aside-Bar ul a:link{
+    color: white !important; 
+}
+/* main{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('https://as1.ftcdn.net/v2/jpg/00/92/65/08/1000_F_92650882_UxkjqJEASOIjqOifk5gy6F9vaW0DwhwG.jpg');
+} */
+
+@media (max-width: 750px) {
+	.Nav-Bar-Toogle-Button{
+		display: block !important;
+	}
+	.Aside-Bar, .Page-Title{
+		display: none;
+	}
+	.Aside-Bar{
+		background-color: white;
+		position: absolute;
+		z-index: 5;
+	}
+	.Assesories-Table{
+		display: block;
+	}
+	.Form-Container > form{
+		width: 350px;
+	}
+}
+@media (max-width: 700px) {
+    form{
+        width: 400px;
+    }
+}
+@media (max-width: 400px) {
+    form{
+        width: 300px;
+    }
+}
+
+.place-center{
+    place-content: center;
+}

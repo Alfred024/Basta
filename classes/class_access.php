@@ -60,7 +60,7 @@
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),
                         '2' => header("location: ../admin/home.php"),
-                        default => header("location: ../index.php")
+                        default => header("location: ../normal/home.php")
                     };
                 }else{
                     $querySelectUser = "select * from usuario where email='{$email}'";
@@ -107,21 +107,28 @@
                 $mail = new PHPMailer();
                 $mail->IsSMTP();
                 $mail->Host="smtp.gmail.com"; 
-                // $mail->SMTPSecure = 'tls';
-                // $mail->Port = 587;
                 $mail->SMTPSecure = 'ssl'; 
+                // $PHPMailer->SMTPOptions = array(
+                //     'ssl' => array (
+                //         'verify_peer' => false,
+                //         'verify_peer_name' => false,
+                //         'allow_self_signed' => true
+                //     )
+                // );
                 $mail->Port = 465;    
-                $mail->SMTPDebug  = 1;  
-                $mail->SMTPAuth = true;   
-                $mail->Username =   "21030761@itcelaya.edu.mx"; 
-                $mail->Password = "jgva azoe wfaf xoyj";  
-                    
+                $mail->SMTPDebug  = 4;  
+                $mail->SMTPAuth = true;
+                // $mail->Username =   "21030761@itcelaya.edu.mx"; 
+                // $mail->Password = "zuji tall oept ngtq";
+                $mail->Username =   "alfredo.jimeneztellez9@gmail.com"; 
+                $mail->Password = "pbek epkc njxn repo";  
+                  
                 $mail->From="21030761@itcelaya.edu.mx"; // ???
-                $mail->FromName="Alfredo"; // ???
-                $mail->Subject = "Registro completo";
+                $mail->FromName="ADMIN BASTA"; // ???
+                $mail->Subject = "Registro de sistema basta completo";
                 $mail->MsgHTML("<h1>BIENVENIDO ".$_REQUEST['name']." ".$_REQUEST['last_name']."</h1><h2> tu clave de acceso es : ".$passwordGenereated."</h2>");
-                $mail->AddAddress($_REQUEST['email']); // ???
-                $mail->AddAddress("admin@admin.com"); // ???
+                $mail->AddAddress($email); // ???
+                // $mail->AddAddress("21030761@itcelaya.edu.mx"); // ???
     
                 $databaseX->query($query);
                 header("location: ../register.php?m=8"); 
@@ -158,6 +165,7 @@
             }
         }
 
+        // HELPERS
         function generatePwd() : string {
             $cadena="ABCDEFGHIJKLMNPQRSTUVWXYZ123456789123456789";
             $numeC=strlen($cadena);

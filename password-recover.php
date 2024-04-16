@@ -81,18 +81,38 @@
       <form method="post" class="mx-auto w-50 p-3">
         <div class="form-group">
           <label for="exampleInputEmail1">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="IFavor de resolver la siguiente operación: <?php echo($captchaRecoverPwd) ?>">
-          
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="210243@itcelaya.edu.mx">
         </div>
 
 
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Captcha</label>
-        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Captcha</label>
+          <input name="captcha" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Favor de resolver la siguiente operación: <?php echo($captchaRecoverPwd) ?>">
+        </div> 
 
         <input type="hidden" name="action" value="recoverPwd">
         <button type="submit" class="btn btn-primary">Recuperar contraseña</button>
+
+        <!-- Mensajes de error del server -->
+        <?php 
+          if (isset($_GET['m'])) {
+            $estado = $_GET['m'];
+            switch ($estado) {
+              case 1:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Llene cada uno de los campos.</h5>");
+                break;
+              case 5:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> No te hagas, no estás registrado.</h5>");
+                break;
+              case 6:
+                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Por favor, compruebe el campo del captcha.</h5>");
+                break;
+              case 8:
+                echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'>Verifique su correo para obtener su nueva clave</h5>");
+              break;
+            }
+          }
+        ?>
       </form>
     </main>
 </body>

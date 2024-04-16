@@ -26,8 +26,8 @@
             $this->open();
             $this->registrersBlock=mysqli_query($this->connection,$queryP);
 
-            if(strpos('SELECT', strtoupper($queryP)) === true){
-                $this->registersNum=mysqli_num_rows($this->registrersBlock);
+            if(strpos('select', strtoupper($queryP)) === true){
+                $this->registersNum=mysqli_num_rows($this->registrersBlock); // Creo que está sentencia no funciona
             };
 
             $this->close();

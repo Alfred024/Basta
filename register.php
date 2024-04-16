@@ -37,7 +37,7 @@
   $_SESSION['captcha_register'] = $resRegister;
   $_SESSION['captcha_recoverPwd'] = $resRecoverPwd;
 
-  var_dump($_SESSION);
+  //var_dump($_SESSION);
   echo('RES REGISTER: '.$resRegister);
 ?>
 
@@ -48,125 +48,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="./STYLE/bootstrap-copy.css"> -->
 
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-    crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="./STYLE/style.css">
+    <!-- STYLES CSS -->
+    <link rel="stylesheet" href="https://alfred024.github.io/CSS-mio/styles.css">
+    <link rel="stylesheet" href="./styles/global.css">
+
     <title>QUE ESTÁ PASANDOOOOO</title>
 </head>
+
 <body>
-<header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
+    <main class="height-100 place-center">
 
-                <li class="nav-item">
-                  <a class="nav-link" href="./login.php">Inicio de sesión</a>
-                </li>
+    <form method="post" action="./classes/class_access.php" class="Form padding-10 margin-auto box-shadow-dark flex-column justify-center bg-light-gray border-radius-30" style="width: 420px;">
+				<h4 class="width-fit font-weight-600 margin-auto" >Registro</h4>
+				<hr style="margin: 10px;">
 
-                <li class="nav-item">
-                  <a class="nav-link" href="./register.php">Registro</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="./password-recover.php">Recuperar contraseña</a>
-                  </li>
+        <label class="flex-column width-80 margin-auto">
+					Nombre
+					<br>
+					<input name="name" class="box-shadow-light border-radius-20 padding-10 border-none" type="text">
+				</label><br>
 
-                  <li class="nav-item">
-                    <a class="nav-link" href="./about-us.php">Sobre nosotros</a>
-                  </li>
-              </ul>
-             
-            </div>
-          </nav>
-    </header>
- 
-    <main>
-      <form  method="post" action="./classes/class_access.php" class="mx-auto p-3">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Nombre</label>
-          <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el nombre">
-          
-        </div>        
+        <label class="flex-column width-80 margin-auto">
+					Apellido
+					<br>
+					<input name="last_name" class="box-shadow-light border-radius-20 padding-10 border-none" type="text">
+				</label><br>
+				
+        <label class="flex-column width-80 margin-auto">
+					Correo
+					<br>
+					<input name="email" class="box-shadow-light border-radius-20 padding-10 border-none" type="text" placeholder="juan.montes@itcelaya.edu.mx">
+				</label><br>
 
-        <div class="form-group">
-          <label for="exampleInputEmail1">Apellido</label>
-          <input name="last_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el apellido">
-          
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email</label>
-          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresa el EMAIL">
-          
-        </div>
-
-        <div class="flex" style="display: flex;">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">
-              HOMBRE
+        <div class="flex margin-auto margin-bottom-10 width-80">
+          <div class="flex">
+            <input type="radio" name="maleGender" id="flexRadioDefault1" checked>
+            <label class="form-check-label margin-right-10" for="flexRadioDefault1">
+              Mujer
             </label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-            <label class="form-check-label" for="flexRadioDefault2">
-              MUJER
+          <div class="flex">
+            <input type="radio" name="maleGender" id="flexRadioDefault1">
+            <label class="form-check-label margin-right-10" for="flexRadioDefault1">
+              Hombre
             </label>
           </div>
         </div>
-        <!-- TODO: Implementar captcha -->
-        <div class="form-group">
-          <label for="exampleInputEmail1">Captcha</label>
-          <input name="captcha" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Favor de resolver la siguiente operación: <?php echo($captchaRegister) ?>">
-        </div>  
 
+        <label class="flex-column width-80 margin-auto">
+					Captcha
+					<br>
+					<input name="captcha" class="box-shadow-light border-radius-20 padding-10 border-none" type="text" placeholder="Favor de resolver la siguiente operación: <?php echo($captchaRegister) ?>">
+				</label><br>
+
+        <input type="hidden" name="action" value="register">
+				<input class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" type="submit" value="Registrar datos" style="width: 200px;">
+
+
+        <!-- TODO: CREAR UNA CLASE Y HACER UN INCLUDE -->
         <?php 
           if (isset($_GET['m'])) {
             $estado = $_GET['m'];
             switch ($estado) {
               case 1:
-                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Llene cada uno de los campos.</h5>");
+                  echo("<p style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 15px; color: orangered;'> Llene cada uno de los campos.</p>");
                 break;
               case 2:
-                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> El email proporcionado ya se encuentra registrado.</h5>");
+                  echo("<p style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 15px; color: orangered;'> El email proporcionado ya se encuentra registrado.</p>");
                 break;
               case 6:
-                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Por favor, compruebe el campo del captcha.</h5>");
+                  echo("<p style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 15px; color: orangered;'> Por favor, compruebe el campo del captcha.</p>");
                 break;
               case 7:
-                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> No se pudo enviar el correo.</h5>");
+                  echo("<p style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 15px; color: orangered;'> No se pudo enviar el correo.</p>");
                 break;
               case 8:
-                  echo("<h5 style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 18px; color: red;'> Su registro se completó exitosamente. Verifique su correo para obtener su clave.</h5>");
+                  echo("<p style='margin-top: 10px; font-weight: bold; text-align: end; font-size: 15px; color: forestgreen;'> Su registro se completó exitosamente. Verifique su correo para obtener su clave.</p>");
                 break;
             }
           }
         ?>
 
-        <input type="hidden" name="action" value="register">
-        <button type="submit" class="btn btn-primary">Registrarse</button>
-      </form>
-    </main>
+				<div class="flex center-flex-xy margin-top-10">
+					<span class="font-size-15 margin-right-5">¿Ya tienes una cuenta?</span>
+					<a href="./login.php" class="Anchor-Form anchor-default font-size-15 text-secondary-blue font-weight-600">Ingresa aquí</a>
+				</div>
+			</form>
 
-    <!-- jquery scripts -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
+    </main>
 </body>
 </html>
