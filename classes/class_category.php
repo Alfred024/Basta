@@ -36,37 +36,59 @@
         }
 
         function displayData($query){
-            $html = "<div class='grid-col-2'>";
-            $datos='<table>';
+            $html = '<div class="margin-auto">';
+            $datos='<table class="margin-y-auto overflow-x-auto border-radius-20 padding-10">';
             $this->query($query);
             $this->getRecord($query);
 
-            $datos='<tr>';
-                    $campos=array();
-                    $datos.="<td>&nbsp</td><td>&nbsp1   </td>";
-                    $tablaN=$this->campos($campos);
-                    foreach($campos as $campo)
-                        $datos='<td calss="fs-4 center">'.$campo.'</td>';
-    
-                $datos='</tr>';
-
-            $header='<span> class="badge bg-info">'.$tablaN.'<button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></span>';
-
-            foreach($this->registrersBlock as $row){
-                $datos.='<tr>';
-                $datos.='<td class="col-1"><button><i class="fa-regular fa-trash-can"></i></button></td>';
-                $datos.='<td class="col-1><button><i class="fa-solid fa-pen-to-square"></i></button></td>';
+            $datos.='<div class="TITLE flex"><h3>Categoría</h3> <button><i class="fa-solid fa-plus"></i></button></div>';
+            
+            $datos.='<thead><tr>';
+            // Fila de encabezados
+            $campos=array();
+            $tablaN=$this->getFields($campos);
+            foreach($campos as $campo){
+                $datos.='<th>'.$campo.'</th>';
             }
+            $datos.="<th>&nbsp</th><th>&nbsp</th>";
+                //$datos.='</table></div>';
+                //echo($datos);
+            $datos.='</tr></thead>';
+                
+            //var_dump($tablaN);
+            //$header='<span> class="badge bg-info">'.$tablaN.'<button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></span>';
+            
+            //$header='<span> class="badge bg-info">'.$datos.'<button class="btn btn-success"><i class="fa-solid fa-plus"></i></button></span>';
+            
+            // EST ESTÁ MAL
+            // foreach($this->registrersBlock as $row){
+            //     $datos.='<tr>';
+            //     $datos.='<td class="col-1"><button><i class="fa-regular fa-trash-can"></i></button></td>';
+            //     $datos.='<td class="col-1><button><i class="fa-solid fa-pen-to-square"></i></button></td>';
+            // }
 
+            $datos.='<tbody>';
             foreach ($this->registrersBlock as $row) {
                 $datos.='<tr>';
-                foreach($row as $columna)
-                    $datos.="<td>".$columna."</td>";
-                $datos.="<tr>";
+                foreach($row as $columna){
+                    $datos.='<td class="text-align-center">'.$columna.'</td>';
+                }
+                $datos.='<td> <button><i class="fa-regular fa-trash-can"></i></button> </td>';
+                $datos.='<td> <button><i class="fa-solid fa-pen-to-square"></i></button> </td>';
+                $datos.="</tr>";
             }
-            $datos='</table></div>';
-            echo ($html.$header.$datos);
+            $datos.='</tbody>';
+            $datos.='</table></div>';
+            echo($datos);
 
+            // $datos.='</table></div>';
+            // printf($html.$datos);
+            //return $html.$datos;
+            //echo ($html.$datos);
+
+            //echo ($html.$header.$datos);
+
+            // ESTE ES EL MÍO
             // foreach($this->registrersBlock as $row){
             //     foreach($row as $fieldRow){
             //         $html .= $fieldRow." ";
@@ -77,6 +99,36 @@
             // //return $html;
             // echo($html);
         }
+
+        function displayData2($query){
+            $html = '<div class="margin-auto">';
+            $html .= '<table class="margin-y-auto overflow-x-auto border-radius-20 padding-10 width-100">';
+            
+            // Encabezados de la tabla
+            $html .= '<thead><tr>';
+            $campos = array();
+            $tablaN = $this->getFields($campos);
+            foreach($campos as $campo){
+                $html .= '<th>'.$campo.'</th>';
+            }
+            $html .= '</tr></thead>';
+        
+            // Datos de la tabla
+            $html .= '<tbody>';
+            foreach ($this->registrersBlock as $row) {
+                $html .= '<tr>';
+                foreach($row as $columna)
+                    $html .= '<td>'.$columna.'</td>';
+                $html .= "</tr>";
+            }
+            $html .= '</tbody>';
+            $html .= '</table></div>';
+        
+            // Mostrar el HTML
+            echo ($html);
+        }
+
+        
     }
 
     $categoryObject = new Category();

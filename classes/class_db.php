@@ -15,8 +15,8 @@
         function __construct(){
             $this-> password=getenv('DB_PASSWORD');  //para acceder a cualquier elemento de la clase se usa $this->;
             $this-> user=getenv('DB_USER');
-            $this-> database="basta";
-            $this-> server="localhost";
+            $this-> database=getenv('DB_NAME');
+            $this-> server=getenv('DB_HOST');
         }
         function open(){
             $this-> connection = mysqli_connect($this->server,$this->user,$this->password,$this->database);
@@ -51,15 +51,19 @@
                 
         //     }
         // }
-        function campos(&$campos){
+        function getFields(&$campos){
+            //$info = "";
             $campos=array();
             //for($campoN=0; $campoN<mysqli_num_fields($this->registersNum); $campoN++){
             for($campoN=0; $campoN<2; $campoN++){
                 $campo=mysqli_fetch_field_direct($this->registrersBlock ,$campoN);
                 $tabla=$campo->table;
                 array_push($campos,$campo->name);
+                //$info.=$campo->name;
             }
-            return $tabla;
+            // echo('INFO');
+            // echo($info);
+            return $campos;
         }
     }
 

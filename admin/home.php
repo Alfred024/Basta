@@ -1,16 +1,16 @@
 <?php
     session_start();
     // if (!isset($_SESSION['session_email']) || $_SESSION['admin'] === FALSE) {
-    if (!isset($_SESSION['session_email'])) {
-        header("../login.php?=x"); // NO tienes acceso a esta página sin un login
-    }
+    // if (!isset($_SESSION['session_email'])) {
+    //     header("../login.php?=x"); // NO tienes acceso a esta página sin un login
+    // }
 
-    include '../classes/class_category.php';
-    if (isset($_REQUEST['action'])){
-        echo $categoryObject->action($_REQUEST['action']);
-    }else{
-        echo $categoryObject->action("report");
-    }
+    // include '../classes/class_category.php';
+    // if (isset($_REQUEST['action'])){
+    //     echo $categoryObject->action($_REQUEST['action']);
+    // }else{
+    //     echo $categoryObject->action("report");
+    // }
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +45,11 @@
                     <i class="fa-solid fa-bars text-white"></i>
                 </button>
             </section>
+
+            <?php 
+                include '../classes/class_category.php';
+                echo $categoryObject->action("report");
+            ?>
         </main>
 
         <?php include('./navbar.php') ?>
