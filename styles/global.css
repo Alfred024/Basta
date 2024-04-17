@@ -42,9 +42,6 @@
 		position: absolute;
 		z-index: 5;
 	}
-	.Assesories-Table{
-		display: block;
-	}
 	.Form-Container > form{
 		width: 350px;
 	}
