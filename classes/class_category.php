@@ -9,7 +9,20 @@
 
             switch ($action_case) {
                 case 'formEdit': // Para editar un dato
-                
+                    $html = '
+                    <form class="flex-column justify-center" method="post">
+                        <label for="text">
+                            Ingrese los nuevos datos de la categoría
+                            <br>
+                            <input type="text" name="update_category" class="box-shadow-light border-radius-20 padding-5 border-none" placeholder="">
+                        </label>
+
+                        <input type="hidden" name="id_category" value="<?php $_REQUEST["id_category"] ?>">
+                        <input type="hidden" name="action" value="update">
+
+                        <input type="submit" value="Actualizar">
+                    </form>';                    
+                    return $html;
                 break;
                 case 'formNew': // Para registrar un nuevo dato 
                     $html = '
@@ -29,10 +42,13 @@
                     $this->action("report");
                 break;
                 case 'update':
-                    # code...
+                    echo('ID de la categoria a actaulizar');
+                    echo($_REQUEST['id_category']);
+                    // $this->query("update categoria set categoria ='".$_REQUEST['update_category']."' where id_categoria=".$_REQUEST['id_category']);
+                    // $this->action("report");
                 break;
                 case 'delete':
-                    $this->query("delete from categoria where id_categoria=".$_POST['id_category']); 
+                    $this->query("delete from categoria where id_categoria=".$_REQUEST['id_category']); 
                     $this->action("report"); 
                 break;
                 case 'report':
@@ -65,7 +81,6 @@
             // Fila de encabezados
             $datos.='<thead><tr>';
             $campos=array();
-            // $tablaN=$this->getFields($campos);
             foreach($campos as $campo){
                 $datos.='<th>'.$campo.'</th>';
             }
@@ -88,8 +103,16 @@
                         <input type="hidden" name="id_category" value="'.$row['id_categoria'].'">
                     </form>
                 </td>';
+                // ¿¿¿DÓNDE SE GUARDAN LOS VALORES DE LAS PETICIONES/REQUEST Y CUPANDO DEJAN DE EXISTIR???
                 // Botón para editar
-                $datos.='<td> <button><i class="fa-solid fa-pen-to-square"></i></button> </td>';
+                $datos.='
+                <td> 
+                    <form method="post">
+                        <button><i class="fa-solid fa-pen-to-square"></i></button> 
+                        <input type="hidden" name="action" value="formEdit">
+                        <input type="hidden" name="id_category" value="'.$row['id_categoria'].'"> 
+                    </form>
+                </td>';
                 $datos.="</tr>";
             }
             $datos.='</tbody>';
@@ -102,97 +125,8 @@
 
     $categoryObject = new Category();
     if(isset($_REQUEST['action'])){
-        // AQUÍ NO SÉ QUE PONER
         echo $categoryObject->action($_REQUEST['action']);
     }else{
         echo $categoryObject->action('report');
     }
-?>
-
-<?php
-// session_unset();//session_destroy(); este destruye todo el archivo 
-
-// include "classBD.php";
-// class Categoria extends baseDatos{
-
-//     function action($cual){
-//         $result="";
-//         switch ($cual) {
-//             case 'formEdit': break;
-//             case 'formNew': $result='
-//                             <div class="container mt-4">';
-//                             $result.='
-//                             <div class="row">
-//                                 <label class="label col-md-4">
-//                                 <div class="col-md-8">
-//                                 <input type="text" placeholder="Nombre" class="form-control">
-//                                 </div>
-//                             </div>';
-
-//                             $result.='
-//                             <div class="row">
-//                                 <label class="label col-md-4">
-//                             <div class="col-md-8">
-//                                 <input type="hidden" name="accion" value="insert" >
-//                                 <input typr="submit" value="Registrar">
-//                             </div>
-//                             </div>';
-//                             $result.="</div>";
-            
-//             break;
-//             case 'insert': $this->query("insert into categoria set Nombre =".$_POST['Nombre']."'");
-//                     $result=$this->accion("report");
-//             break;
-//             case 'report': $result=$this->despTablaDatos("select Nombre from categoria order by Nombre"); break;
-//             case 'delete': $this->$query("delete from categoria where id_Categoria=".$_POST['id']); 
-//                             $result=$this->action("report"); 
-//             break;
-//             case 'update': break;
-//             default: break;
-//         }
-//         return $result;
-//     }
-
-//     function despTablaDatos ($query){
-//         $html='<div class="container mt-4">';
-        
-//         $datos='<table class="table table-striped table-hover ">';
-//         $this->query($query);
-//         //inicia cabecera
-//             $datos='<tr>';
-//                 $campos=array();
-//                 $datos.="<td>&nbsp</td><td>&nbsp1   </td>";
-//                 $tablaN=$this->campos($campos);
-//                 foreach($campos as $campo)
-//                     $datos='<td class="fs-4 center">'.$campo.'</td>';
-
-//             $datos='</tr>';
-//             $header='<span> class="badge bg-info">'.$tablaN.'</span> 
-//             <form method="post"> 
-//             <button class="btn btn-success"><i class="bi bi-plus"></i></button><input type="hidden" name="accion" value="formNew"> </form>';
-//         //termina 
-//         foreach($this->a_bloqRegistros as $row){
-//             $datos.='<tr>';
-//             //iconos de accion 
-//             $datos.='<td class="col-1"> <form method="post"> <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button> <input type="hidden" name="accion" value="delete"> 
-//             <input type="hidden" name="id" value="'.$row['id_categoria'].'"> </form></td>';
-//             $datos.='<td class="col-1><form methid="post"><button class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button> <input type="hidden" name="accion" value="update"> 
-//             <input type="hidden" name="id" value="update"> </form></td>';
-//         }
-
-//         foreach ($this->a_bloqRegistros as $row) {
-//             $datos.='<tr>';
-//             foreach($row as $columna)
-//                 $datos.="<td>".$columna."</td>";
-//             $datos.="<tr>";
-//         }
-//         $datos='</table></div>';
-//         return $html.$header.$datos;
-//     }
-// }
-
-// $oCategoria= new Categoria();
-// if(isset($_REQUEST['action']))
-// $oAcceso->action($_REQUEST['action']);
-// echo $oAcceso->action($_REQUEST['accion']);
 ?>
