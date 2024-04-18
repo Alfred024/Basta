@@ -32,8 +32,8 @@
 </head>
 <body>
 
-    <div class=" flex">   
-        <main class="overflow-auto" style="width: 100%; height: 100vh;">
+    <div class="flex">   
+        <main class="flex-column overflow-auto width-100 height-full">
             <section class="padding-10 bg-secondary-orange flex justify-between" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                 <div class="flex">
                     <img class="margin-right-10" src="https://www.svgrepo.com/show/295402/user-profile.svg" alt="User profile picture" style="width: 35px;">

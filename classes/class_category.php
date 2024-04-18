@@ -8,15 +8,20 @@
             $actionReult = "";
 
             switch ($action_case) {
-                case 'formEdit':
+                case 'formEdit': // Para editar un dato
                 
                 break;
-                case 'formNew':  // Genera HTML para el usuario
-                    // TODO: Usar método de la API para hacer login
-                    $html = '< class="">';
-                    $html .= '<div class="flex">
-                        <label>'; 
-                    $html .= '</div>'; 
+                case 'formNew': // Para registrar un nuevo dato 
+                    $html = '
+                    <form action="" method="post">
+                        <label for="text">
+                            Ingrese el nuevo nombre de la categoria "Nombre categoría actual"
+                            <br>
+                            <input type="hidden" value="update">
+                            <input name="new_category" class="box-shadow-light border-radius-20 padding-5 border-none" type="text" placeholder="Igrese el ">
+                        </label>
+                    </form>'; 
+                    
                 break;
                 case 'insert': // Inserta directo a la Base de datos
                 
