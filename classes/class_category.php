@@ -31,11 +31,12 @@
                 case 'update':
                     # code...
                 break;
+                case 'delete':
+                    $this->query("delete from categoria where id_categoria=".$_POST['id_category']); 
+                    $this->action("report"); 
+                break;
                 case 'report':
                     $this->displayData('select * from categoria;');
-                break;
-                case 'delete':
-                    # code...
                 break;
             }
 
@@ -78,7 +79,16 @@
                 foreach($row as $columna){
                     $datos.='<td class="text-align-center">'.$columna.'</td>';
                 }
-                $datos.='<td> <button><i class="fa-regular fa-trash-can"></i></button> </td>';
+                // Botón para borrar 
+                $datos.='
+                <td> 
+                    <form method="post">
+                        <button><i class="fa-regular fa-trash-can"></i></button>
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="id_category" value="'.$row['id_categoria'].'">
+                    </form>
+                </td>';
+                // Botón para editar
                 $datos.='<td> <button><i class="fa-solid fa-pen-to-square"></i></button> </td>';
                 $datos.="</tr>";
             }
