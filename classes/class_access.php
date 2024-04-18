@@ -56,8 +56,9 @@
                     $_SESSION['session_password'] = $data->clave;
                     $_SESSION['session_username'] = $data->nombre;
 
-                    // TODO: Verificar cómo llega el tipo_usuario (tipo de dato)
-                    //header("location: ../admin/home.php");
+                    // if($data->tipo_usuario = '2'){
+                    //     $_SESSION['admin'] = TRUE;
+                    // }
 
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),
@@ -167,7 +168,7 @@
             }
         }
 
-        // HELPERS
+        // TODO: CREAR ESTOS MÉTODOS COMO HELPERS
         function generatePwd() : string {
             $cadena="ABCDEFGHIJKLMNPQRSTUVWXYZ123456789123456789";
             $numeC=strlen($cadena);
