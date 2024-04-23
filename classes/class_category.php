@@ -8,44 +8,41 @@
             $actionReult = "";
 
             switch ($action_case) {
-                case 'formEdit': // Para editar un dato
+                case 'formEdit': 
+                case 'formNew':
+                    if($_REQUEST["action"] === "formEdit"){
+                        $label_description = "Nuevo nombre de la categoría";
+                        $action = "update";
+                        $button_description = "Actualizar";
+                        $id_category = $_REQUEST['id_category'];
+                    }else{
+                        $label_description = "Nombre de la nueva categoría";    
+                        $action = "insert";
+                        $button_description = "Crear";
+                        $id_category = '';
+                    }
+                    
                     $html = '
-                    <form class="flex-column justify-center" method="post">
+                    <form class="flex-column justify-center" method="post" style="width:500px">
                         <label for="text">
-                            Ingrese los nuevos datos de la categoría
+                            '.$label_description.'
                             <br>
-                            <input type="text" name="update_category" class="box-shadow-light border-radius-20 padding-5 border-none" placeholder="">
+                            <input type="text" name="category_input" class="box-shadow-light border-radius-20 padding-5 border-none" placeholder="">
                         </label>
 
-                        <input type="hidden" name="id_category" value="<?php $_REQUEST["id_category"] ?>">
-                        <input type="hidden" name="action" value="update">
-
-                        <input type="submit" value="Actualizar">
+                        <input type="hidden" name="id_category_to_update" value="'.$id_category.'">
+                        <input type="hidden" name="action" value="'.$action.'">
+                        <input type="submit" value="'.$button_description.'">
                     </form>';                    
                     return $html;
                 break;
-                case 'formNew': // Para registrar un nuevo dato 
-                    $html = '
-                    <form class="flex-column justify-center" method="post">
-                        <label for="text">
-                            Ingrese el nombre de la nueva categoría
-                            <br>
-                            <input type="text" name="new_category" class="box-shadow-light border-radius-20 padding-5 border-none" placeholder="">
-                            </label>
-                        <input type="hidden" name="action" value="insert">
-                        <input type="submit" value="Crear">
-                    </form>';                    
-                    return $html;
-                break;
-                case 'insert': // Inserta directo a la Base de datos
-                    $this->query("insert into categoria set categoria ='".$_REQUEST['new_category']."'");
+                case 'insert': 
+                    $this->query("insert into categoria set categoria ='".$_REQUEST['category_input']."'");
                     $this->action("report");
                 break;
                 case 'update':
-                    echo('ID de la categoria a actaulizar');
-                    echo($_REQUEST['id_category']);
-                    // $this->query("update categoria set categoria ='".$_REQUEST['update_category']."' where id_categoria=".$_REQUEST['id_category']);
-                    // $this->action("report");
+                    $this->query("update categoria set categoria ='".$_REQUEST['category_input']."' where id_categoria=".$_REQUEST['id_category_to_update']);
+                    $this->action("report");
                 break;
                 case 'delete':
                     $this->query("delete from categoria where id_categoria=".$_REQUEST['id_category']); 

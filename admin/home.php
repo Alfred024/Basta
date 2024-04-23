@@ -48,11 +48,10 @@
 
             <?php 
                 include '../classes/class_category.php';
-                echo $categoryObject->action("report");
             ?>
         </main>
 
-        <?php include('./navbar.php') ?>
+        <!-- <?php include('./navbar.php') ?> -->
     </div>
 
     <!-- <script>
