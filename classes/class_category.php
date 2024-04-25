@@ -23,16 +23,17 @@
                     }
                     
                     $html = '
-                    <form class="flex-column justify-center" method="post" style="width:500px">
-                        <label for="text">
+                    <form class="margin-auto flex-column justify-center" method="post" style="width:350px">
+                        <label for="text" class="margin-bottom-10 ">
                             '.$label_description.'
                             <br>
-                            <input type="text" name="category_input" class="box-shadow-light border-radius-20 padding-5 border-none" placeholder="">
                         </label>
+                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="">
 
                         <input type="hidden" name="id_category_to_update" value="'.$id_category.'">
                         <input type="hidden" name="action" value="'.$action.'">
-                        <input type="submit" value="'.$button_description.'">
+
+                        <input type="submit" value="'.$button_description.'" class="margin-auto text-white padding-10 border-radius-10 border-none bg-primary-orange" style="width: 200px;">
                     </form>';                    
                     return $html;
                 break;
