@@ -33,6 +33,8 @@
 <body>
 
     <div class="flex">   
+        <?php include('./navbar.php') ?>
+
         <main class="flex-column overflow-auto width-100 height-full">
             <section class="padding-10 bg-secondary-orange flex justify-between" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                 <div class="flex">
@@ -50,8 +52,6 @@
                 include '../classes/class_category.php';
             ?>
         </main>
-
-        <!-- <?php include('./navbar.php') ?> -->
     </div>
 
     <!-- <script>

@@ -57,16 +57,18 @@
         }
 
         function displayData($query){
-            $htmlStart = '<div class="margin-auto width-100 padding-20">';
-            $datos='<table class="Table margin-auto margin-y-auto overflow-x-auto border-radius-20 padding-10">';
+            $htmlStart = '<section class="padding-10">';
+            //$datos='<table class="Assesories-Table overflow-x-auto padding-10 width-100">';
+
+            $datos='<table class="Table overflow-x-auto padding-10 width-100 border-radius-20">';
             $this->query($query);
             $this->getRecord($query);
 
             $datos.='
-                <div class="flex justify-center">
-                    <h3>Categoría</h3> 
+                <div class="text-white padding-10 width-fit bg-primary-orange flex justify-start" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                    <h3 class="margin-right-10">Categoría</h3> 
                     <form method="post">
-                        <button><i class="fa-solid fa-plus"></i></button>
+                        <button class="bg-bolor-unset border-none"><i class="fa-solid fa-plus"></i></button>
                         <input type="hidden" name="action" value="formNew">
                     </form>
                 </div>';
@@ -110,7 +112,7 @@
             }
             $datos.='</tbody>';
             $datos.='</table></div>';
-            $htmlEnd = '</div>';
+            $htmlEnd = '</section>';
             echo($htmlStart.$datos.$htmlEnd);
         }
 
