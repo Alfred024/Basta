@@ -56,13 +56,9 @@
             return $actionReult;
         }
 
-        function insertData($query) {
-            
-        }
-
         function displayData($query){
             $htmlStart = '<div class="margin-auto width-100 padding-20">';
-            $datos='<table class="margin-auto margin-y-auto overflow-x-auto border-radius-20 padding-10">';
+            $datos='<table class="Table margin-auto margin-y-auto overflow-x-auto border-radius-20 padding-10">';
             $this->query($query);
             $this->getRecord($query);
 
@@ -87,7 +83,7 @@
             // Contenido y datos
             $datos.='<tbody>';
             foreach ($this->registrersBlock as $row) {
-                $datos.='<tr>';
+                $datos.='<tr class="text-primary-orange">';
                 foreach($row as $columna){
                     $datos.='<td class="text-align-center">'.$columna.'</td>';
                 }

@@ -1,25 +1,11 @@
-<div class="modal">
-    <form action="" method="post">
-        <label for="text">
-            Ingrese el nuevo nombre de la categoria "Nombre categoría actual"
-            <br>
-            <input type="hidden" value="update">
-            <input name="new_category" class="box-shadow-light border-radius-20 padding-5 border-none" type="text" placeholder="Igrese el ">
-        </label>
-    </form>
-</div>
-
-<form action="" method="post">
+<form class="flex-column justify-center" method="post" style="width:500px">
     <label for="text">
-        Ingrese el nombre de la nueva catgeoría
+        '.$label_description.'
         <br>
-        <input type="hidden" value="insert">
-        <input name="new_category" type="text" placeholder="Igrese el ">
+        <input type="text" name="category_input" class="box-shadow-light border-radius-20 padding-5 border-none" placeholder="">
     </label>
-</form>
 
-<label class="flex-column width-80 margin-auto">
-    Apellido Materno
-    <br>
-    <input name="apellido_materno" class="box-shadow-light border-radius-20 padding-5 border-none" type="text" placeholder="">
-</label><br>
+    <input type="hidden" name="id_category_to_update" value="'.$id_category.'">
+    <input type="hidden" name="action" value="'.$action.'">
+    <input type="submit" value="'.$button_description.'">
+</form>
