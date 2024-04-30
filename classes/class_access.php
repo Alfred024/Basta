@@ -56,9 +56,16 @@
                     $_SESSION['session_password'] = $data->clave;
                     $_SESSION['session_username'] = $data->nombre;
 
-                    // if($data->tipo_usuario = '2'){
-                    //     $_SESSION['admin'] = TRUE;
-                    // }
+                    if($data->tipo_usuario = '2'){
+                        $_SESSION['admin'] = TRUE;
+                    }
+
+                    if(!isset($data->foto)){
+                        $_SESSION['session_photo'] = '../files/default-user-profile.svg';
+                        echo('NO HAY UNA FOTO');
+                    }else{
+                        
+                    }
 
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),

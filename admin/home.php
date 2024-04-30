@@ -1,9 +1,8 @@
 <?php
     session_start();
-    // if (!isset($_SESSION['session_email']) || $_SESSION['admin'] === FALSE) {
-    // if (!isset($_SESSION['session_email'])) {
-    //     header("../login.php?=x"); // NO tienes acceso a esta página sin un login
-    // }
+    if (!isset($_SESSION['session_email']) || $_SESSION['admin'] === FALSE) {
+        header("location: ../login.php"); 
+    }
 
     // include '../classes/class_category.php';
     // if (isset($_REQUEST['action'])){
@@ -38,7 +37,8 @@
         <main class="flex-column overflow-auto width-100 height-full">
             <section class="padding-10 bg-secondary-orange flex justify-between" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                 <div class="flex">
-                    <img class="margin-right-10" src="https://www.svgrepo.com/show/295402/user-profile.svg" alt="User profile picture" style="width: 35px;">
+                    <!-- <img class="margin-right-10" src="https://www.svgrepo.com/show/295402/user-profile.svg" alt="User profile picture" style="width: 35px;"> -->
+                    <img src='<?= $_SESSION['session_photo'] ?>' alt="Foto de perfil por defecto" style="width: 35px;" >
 
                     <h4 class="Page-Title text-white align-self-center margin-left-5">Bienvenido admin <?= $_SESSION['session_username'] ?></h4>
                 </div>
@@ -49,7 +49,7 @@
             </section>
 
             <?php 
-                include '../classes/class_category.php';
+                include '../classes/class_user.php';
             ?>
         </main>
     </div>

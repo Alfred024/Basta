@@ -4,7 +4,7 @@
     //var_dump($_FILES['file_upload']);
     // $_FILES['file_upload']; = $_FILES['file_upload'];
     // move_uploaded_file($_FILES['file_upload']['name'], "./files/".$_FILES['file_upload']['name']);
-    if(!is_dir('files')){
+    if(!is_dir('./files')){
         mkdir('files');
     }
 
