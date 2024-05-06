@@ -53,6 +53,8 @@
     <link rel="stylesheet" href="./styles/global.css">
 
     <title>QUE ESTÁ PASANDOOOOO</title>
+
+    <script src="./controllers/users.js?2024.01"></script>
 </head>
 
 <body>
@@ -102,7 +104,8 @@
 				</label><br>
 
         <input type="hidden" name="action" value="register">
-				<input class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" type="submit" value="Registrar datos" style="width: 200px;">
+				<!-- <input class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" type="submit" value="Registrar datos" style="width: 200px;"> -->
+        <input class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" type="button" onclick="()=>console.log('Perdimos funciones HTML 5 ')" value="Registrar datos" style="width: 200px;">
 
 
         <!-- TODO: CREAR UNA CLASE Y HACER UN INCLUDE -->
