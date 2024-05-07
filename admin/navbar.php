@@ -37,7 +37,7 @@
                         Usuarios
                     </li>
                </a>
-               <a class="AsideBar-Anchor text-white anchor-default flex align-center" href="">
+               <a href="../login.php" class="AsideBar-Anchor text-white anchor-default flex align-center">
                     <span class="List-Item-Span margin-right-10"></span>
                     <li class="margin-block-10">
                         <i class="fa-solid fa-right-from-bracket"></i>

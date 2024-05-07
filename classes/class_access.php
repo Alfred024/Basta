@@ -56,9 +56,9 @@
                     $_SESSION['session_password'] = $data->clave;
                     $_SESSION['session_username'] = $data->nombre;
 
-                    // if($data->tipo_usuario = '2'){
-                    //     $_SESSION['admin'] = TRUE;
-                    // }
+                    if($data->tipo_usuario === '2'){
+                        $_SESSION['admin'] = TRUE;
+                    }
 
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),
