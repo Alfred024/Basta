@@ -50,7 +50,7 @@
             </section>
 
             <?php 
-                include '../classes/class_category.php';
+                include '../classes/class_user.php';
             ?>
         </main>
     </div>
