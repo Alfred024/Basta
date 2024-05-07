@@ -77,6 +77,7 @@
             // Fila de encabezados
             $datos.='<thead><tr>';
             $campos=array();
+            $this->getFields($campos);
             foreach($campos as $campo){
                 $datos.='<th>'.$campo.'</th>';
             }
@@ -90,15 +91,24 @@
                 foreach($row as $columna){
                     $datos.='<td class="text-align-center">'.$columna.'</td>';
                 }
-                // Botón para borrar 
+                // Botón para borrar sin JS
+                // $datos.='
+                // <td> 
+                //     <form method="post">
+                //         <button><i class="fa-regular fa-trash-can"></i></button>
+                //         <input type="hidden" name="action" value="delete">
+                //         <input type="hidden" name="id_category" value="'.$row['id_categoria'].'">
+                //     </form>
+                // </td>';
+                // Botón para borrar con JS
                 $datos.='
-                <td> 
-                    <form method="post">
-                        <button><i class="fa-regular fa-trash-can"></i></button>
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="id_category" value="'.$row['id_categoria'].'">
-                    </form>
-                </td>';
+                    <td> 
+                        <form method="post">
+                            <button onclick="return confirm(\'¿Deseas borrar el elemento '.$row['categoria'].'\')"><i class="fa-regular fa-trash-can"></i></button>
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="id_category" value="'.$row['id_categoria'].'">
+                        </form>
+                    </td> ';
                 // ¿¿¿DÓNDE SE GUARDAN LOS VALORES DE LAS PETICIONES/REQUEST Y CUPANDO DEJAN DE EXISTIR???
                 // Botón para editar
                 $datos.='

@@ -2,7 +2,7 @@
     include "../classes/class_db.php";
     // session_start();
 
-    class Category extends MYSQL_DB{
+    class User extends MYSQL_DB{
 
         function action($action_case){
             $actionReult = "";
@@ -14,12 +14,12 @@
                         $label_description = "Nuevo nombre del usuario";
                         $action = "update";
                         $button_description = "Actualizar";
-                        $id_user = $_REQUEST['id_user'];
+                        $id_category = $_REQUEST['id_category'];
                     }else{
                         $label_description = "Nombre del nuevo usuario";    
                         $action = "insert";
                         $button_description = "Crear";
-                        $id_user = '';
+                        $id_category = '';
                     }
                     
                     $html = '
@@ -30,7 +30,7 @@
                         </label>
                         <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="">
 
-                        <input type="hidden" name="id_user_to_update" value="'.$id_user.'">
+                        <input type="hidden" name="id_user_to_update" value="'.$id_category.'">
                         <input type="hidden" name="action" value="'.$action.'">
 
                         <input type="submit" value="'.$button_description.'" class="margin-auto text-white padding-10 border-radius-10 border-none bg-primary-orange" style="width: 200px;">
@@ -46,7 +46,7 @@
                     $this->action("report");
                 break;
                 case 'delete':
-                    $this->query("delete from usuario where id_usuario=".$_REQUEST['id_user']); 
+                    $this->query("delete from usuario where id_usuario=".$_REQUEST['id_category']); 
                     $this->action("report"); 
                 break;
                 case 'report':
@@ -67,9 +67,9 @@
 
             $datos.='
                 <div class="text-white padding-10 width-fit bg-primary-orange flex justify-start" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
-                    <h3 class="margin-right-10">usuario</h3> 
+                    <h3 class="margin-right-10">Usuarios</h3> 
                     <form method="post">
-                        <button class="bg-bolor-unset border-none"><i class="fa-solid fa-plus"></i></button>
+                        <button class="bg-bolor-unset border-none text-white"><i class="fa-solid fa-plus"></i></button>
                         <input type="hidden" name="action" value="formNew">
                     </form>
                 </div>';
@@ -77,6 +77,7 @@
             // Fila de encabezados
             $datos.='<thead><tr>';
             $campos=array();
+            $this->getFields($campos);
             foreach($campos as $campo){
                 $datos.='<th>'.$campo.'</th>';
             }
@@ -90,23 +91,32 @@
                 foreach($row as $columna){
                     $datos.='<td class="text-align-center">'.$columna.'</td>';
                 }
-                // Botón para borrar 
+                // Botón para borrar sin JS
+                // $datos.='
+                // <td> 
+                //     <form method="post">
+                //         <button><i class="fa-regular fa-trash-can"></i></button>
+                //         <input type="hidden" name="action" value="delete">
+                //         <input type="hidden" name="id_category" value="'.$row['id_usuario'].'">
+                //     </form>
+                // </td>';
+                // Botón para borrar con JS
                 $datos.='
-                <td> 
-                    <form method="post">
-                        <button><i class="fa-regular fa-trash-can"></i></button>
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="id_user" value="'.$row['id_usuario'].'">
-                    </form>
-                </td>';
-                // ¿¿¿DÓNDE SE GUARDAN LOS VALORES DE LAS PETICIONES/REQUEST Y CUPANDO DEJAN DE EXISTIR???
+                    <td> 
+                        <form method="post">
+                            <button onclick="return confirm(\'¿Deseas borrar el usuario con el correo '.$row['email'].'\')"><i class="fa-regular fa-trash-can"></i></button>
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="id_category" value="'.$row['id_usuario'].'">
+                        </form>
+                    </td> ';
+                // ¿¿¿DÓNDE SE GUARDAN LOS VALORES DE LAS PETICIONES/REQUEST Y CUÁNDO DEJAN DE EXISTIR???
                 // Botón para editar
                 $datos.='
                 <td> 
                     <form method="post">
                         <button><i class="fa-solid fa-pen-to-square"></i></button> 
                         <input type="hidden" name="action" value="formEdit">
-                        <input type="hidden" name="id_user" value="'.$row['id_usuario'].'"> 
+                        <input type="hidden" name="id_category" value="'.$row['id_usuario'].'"> 
                     </form>
                 </td>';
                 $datos.="</tr>";
@@ -119,7 +129,7 @@
 
     }
 
-    $categoryObject = new Category();
+    $categoryObject = new User();
     if(isset($_REQUEST['action'])){
         echo $categoryObject->action($_REQUEST['action']);
     }else{

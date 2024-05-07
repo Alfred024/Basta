@@ -1,7 +1,9 @@
 <?php
     session_start();
-    if (!isset($_SESSION['session_email']) || $_SESSION['admin'] === FALSE) {
-        header("location: ../login.php"); 
+
+    //echo($_SESSION['admin']);
+    if (!isset($_SESSION['admin'])) {
+        header("location: ../login.php?m=2"); // No tienes acceso a esta página sin un login
     }
 
     // include '../classes/class_category.php';
