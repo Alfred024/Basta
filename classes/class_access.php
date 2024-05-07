@@ -64,6 +64,7 @@
                         $_SESSION['session_photo'] = '../files/default-user-profile.svg';
                         echo('NO HAY UNA FOTO');
                     }else{
+                        // Cómo se formaba el id de la foto 
                         
                     }
 
@@ -237,7 +238,10 @@
             return $numA * $numB;
         }
     
-    }
+        function getProfileImagePath($id_user){
+            
+        }
+    }   
 
     // $databaseX = new MYSQL_DB();
 

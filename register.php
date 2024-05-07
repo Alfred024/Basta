@@ -82,6 +82,18 @@
 					<input name="email" class="box-shadow-light border-radius-20 padding-10 border-none" type="text" placeholder="juan.montes@itcelaya.edu.mx">
 				</label><br>
 
+        <label class="flex-column width-80 margin-auto">
+					Contraseña
+					<br>
+					<input name="passw1" id="passw1" class="box-shadow-light border-radius-20 padding-10 border-none" type="password">
+				</label><br>
+				
+        <label class="flex-column width-80 margin-auto">
+          Confirmación de contraseña
+					<br>
+					<input name="passw2" id="passw2" class="box-shadow-light border-radius-20 padding-10 border-none" type="password">
+				</label><br>
+
         <div class="flex margin-auto margin-bottom-10 width-80">
           <div class="flex">
             <input type="radio" name="maleGender" id="flexRadioDefault1" checked>
@@ -105,7 +117,12 @@
 
         <input type="hidden" name="action" value="register">
 				<!-- <input class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" type="submit" value="Registrar datos" style="width: 200px;"> -->
-        <input class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" type="button" onclick="()=>console.log('Perdimos funciones HTML 5 ')" value="Registrar datos" style="width: 200px;">
+        <input 
+          class="bg-primary-orange text-white border-radius-20 padding-10 border-none margin-auto" 
+          type="submit" 
+          onclick="return users('validateRegister')" 
+          value="Registrar datos" style="width: 200px;">
+        <span id="message"></span>
 
 
         <!-- TODO: CREAR UNA CLASE Y HACER UN INCLUDE -->

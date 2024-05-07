@@ -17,7 +17,13 @@ function users(action, id) {
             
             break;
         case 'validateRegister':
-            
+            message.innerHTML="";
+            if(passw1.value==passw2.value && passw1.value>""){
+                return true;
+            }else{
+                message.innerHTML="La constraseñas no coinciden o hay un campo vacío";
+                return false;
+            }
             break;
         default:
             alert('Opción inválida.');
