@@ -30,6 +30,11 @@
       src="https://kit.fontawesome.com/cdb751df44.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Controller Script -->
+    <script src="../controllers/users.js"></script>
 </head>
 <body>
 
@@ -40,7 +45,7 @@
             <section class="padding-10 bg-secondary-orange flex justify-between" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                 <div class="flex">
                     <!-- <img class="margin-right-10" src="https://www.svgrepo.com/show/295402/user-profile.svg" alt="User profile picture" style="width: 35px;"> -->
-                    <img src='<?= $_SESSION['session_photo'] ?>' alt="Foto de perfil por defecto" style="width: 35px;" >
+                    <img src='<?= $_SESSION['session_photo'] ?>' alt="" style="width: 35px;" >
 
                     <h4 class="Page-Title text-white align-self-center margin-left-5">Bienvenido admin <?= $_SESSION['session_username'] ?></h4>
                 </div>
@@ -50,9 +55,12 @@
                 </button>
             </section>
 
-            <?php 
-                include '../classes/class_user.php';
-            ?>
+            <!-- TODO: En base al botón presionado del NavBar, mostrar la clase -->
+            <div id="workArea" class="width-100 height-100">
+                <?php 
+                    include '../classes/class_user.php';
+                ?>
+            </div>
         </main>
     </div>
 

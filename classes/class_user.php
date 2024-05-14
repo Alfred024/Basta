@@ -8,33 +8,37 @@
             $actionReult = "";
 
             switch ($action_case) {
-                case 'formEdit': 
                 case 'formNew':
-                    if($_REQUEST["action"] === "formEdit"){
-                        $label_description = "Nuevo nombre del usuario";
-                        $action = "update";
-                        $button_description = "Actualizar";
-                        $id_category = $_REQUEST['id_category'];
-                    }else{
-                        $label_description = "Nombre del nuevo usuario";    
-                        $action = "insert";
-                        $button_description = "Crear";
-                        $id_category = '';
-                    }
-                    
                     $html = '
+                    <div class="width-100 height-100 flex center-flex-xy">
                     <form class="margin-auto flex-column justify-center" method="post" style="width:350px">
-                        <label for="text" class="margin-bottom-10 ">
-                            '.$label_description.'
-                            <br>
-                        </label>
-                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="">
-
-                        <input type="hidden" name="id_user_to_update" value="'.$id_category.'">
-                        <input type="hidden" name="action" value="'.$action.'">
-
-                        <input type="submit" value="'.$button_description.'" class="margin-auto text-white padding-10 border-radius-10 border-none bg-primary-orange" style="width: 200px;">
-                    </form>';                    
+                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Nombre">
+                        
+                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Apellidos">
+                        
+                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Clave">
+                        
+                        <input type="email" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Email">
+                        
+                        <input type="file" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Foto">
+                        
+                        <div>
+                            <input type="radio" name="mujer" id="">
+                            <label for="">Mujer</label>
+                            <input type="radio" name="hombre" id="">
+                            <label for="">Hombre</label>
+                        </div>
+                
+                        <label for="">Tipo de usuario
+                        <select name="user_type" id="">
+                            <option value="admin">Admin</option>
+                            <option value="normal">Normal</option>
+                        </select>
+                        </label><br>
+                    
+                        <input type="submit" value="Registrar nuevo usuario" class="margin-auto text-white padding-10 border-radius-10 border-none bg-primary-orange" style="width: 200px;">
+                    </form>
+                    </div>';                    
                     return $html;
                 break;
                 case 'insert': 
@@ -68,10 +72,7 @@
             $datos.='
                 <div class="text-white padding-10 width-fit bg-primary-orange flex justify-start" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
                     <h3 class="margin-right-10">Usuarios</h3> 
-                    <form method="post">
-                        <button class="bg-bolor-unset border-none text-white"><i class="fa-solid fa-plus"></i></button>
-                        <input type="hidden" name="action" value="formNew">
-                    </form>
+                    <button style="cursor: pointer;" onclick="return users(\'formNew\')" class="bg-bolor-unset border-none text-white"><i class="fa-solid fa-plus"></i></button>
                 </div>';
             
             // Fila de encabezados
