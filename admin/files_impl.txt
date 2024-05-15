@@ -1,0 +1,13 @@
+<li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <? echo $_SESSION['nombre']; ?>
+              <?php 
+      $imagen = "../fotos/".$_SESSION['IdUsuario'].".".$_SESSION['foto'];
+      if(!is_file($imagen)){
+        $imagen="../fotos/user.png";
+      }
+    
+    ?>
+              <img src="<?php echo $imagen; ?>" class="img-user">
+              </a>
+            </li>

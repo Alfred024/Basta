@@ -29,12 +29,19 @@
         function query($queryP){
             $this->open();
             $this->registrersBlock=mysqli_query($this->connection,$queryP);
-
-            if(strpos('select', strtoupper($queryP)) === true){
+            if(strpos('select', strtolower($queryP)) === true){
                 $this->registersNum=mysqli_num_rows($this->registrersBlock); // Creo que está sentencia no funciona
             };
-
             $this->close();
+            // try {
+            //     $this->registrersBlock=mysqli_query($this->connection,$queryP);
+            //     if(strpos('select', strtolower($queryP)) === true){
+            //         $this->registersNum=mysqli_num_rows($this->registrersBlock); // Creo que está sentencia no funciona
+            //     };
+            //     $this->close();
+            // } catch (Exception $e) {
+            //     echo('Error doing the query');
+            // }
         }
 
         function getRecord($queryP){

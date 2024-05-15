@@ -77,7 +77,7 @@
                 break;
                 case 'update':
                     $this->query("
-                    insert into usuario set 
+                    update usuario set 
                         nombre ='".$_REQUEST['nombre']."', 
                         apellidos='".$_REQUEST['apellidos']."', 
                         genero ='".(isset($_REQUEST['genero']) ? $_REQUEST['genero'] : "Otro")."', 
