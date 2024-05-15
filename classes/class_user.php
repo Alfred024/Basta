@@ -8,53 +8,95 @@
             $actionReult = "";
 
             switch ($action_case) {
+                case 'formEdit':
+                    $usuario_info = $this->getRecord("select * from usuario where id_usuario = " . $_REQUEST['id_user_to_update']);
                 case 'formNew':
+                    //var_dump($usuario_info);
                     $html = '
                     <div class="width-100 height-100 flex center-flex-xy">
-                    <form class="margin-auto flex-column justify-center" method="post" style="width:350px">
-                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Nombre">
+                    
+                    <!-- <form onsubmit="'.(isset($usuario_info) ? 'return users(\'update\');' : 'return users(\'insert\');').'" id="form_user" class="margin-auto flex-column justify-center" method="post" style="width:350px">  -->
+
+                    <form id="form_user" onsubmit="return users(\'inserta\')" class="margin-auto flex-column justify-center" method="post" style="width:350px">
+
+                        <input type="text" name="nombre" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Nombre" value="'.(isset($usuario_info) ? $usuario_info->nombre : '').'">
                         
-                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Apellidos">
+                        <input type="text" name="apellidos" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Apellidos" value="'.(isset($usuario_info) ? $usuario_info->apellidos : '').'">
                         
-                        <input type="text" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Clave">
+                        <input type="text" id="clave" name="clave" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Contraseña" value="'.(isset($usuario_info) ? $usuario_info->clave : '').'">
+
+                        '.(!isset($usuario_info) ? '
+                        <input type="text" id="clave2" name="clave2" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Confimración de la contraseña" value="">' : ''
+                        ).'
                         
-                        <input type="email" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Email">
+                        <input type="email" name="email" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Email" value="'.(isset($usuario_info) ? $usuario_info->email : '').'">
                         
-                        <input type="file" name="category_input" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Foto">
+                        <!-- <input type="file" name="foto" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Foto" value="'.(isset($usuario_info) ? $usuario_info->foto : '').'"> -->
                         
                         <div>
-                            <input type="radio" name="mujer" id="">
+                            <input type="radio" name="genero" value="Mujer" id="">
                             <label for="">Mujer</label>
-                            <input type="radio" name="hombre" id="">
+                            <input type="radio" name="genero" value="Hombre" id="">
                             <label for="">Hombre</label>
                         </div>
                 
+                        <!-- TODO: Cómo hago para que  -->
+                        <!-- <label for="">Tipo de usuario
+                        <select name="tipo_usuario" id="">
+                            <option value="admin" <?php (isset($usuario_info) ? ($usuario_info->tipo_usuario == 2 ? "selected" : "") : "") ?>  >Admin</option>
+                            <option value="normal" <?php (isset($usuario_info) ? ($usuario_info->tipo_usuario == 1 ? "selected" : "") : "") ?> >Normal</option>
+                        </select>
+                        </label><br> -->
+
                         <label for="">Tipo de usuario
-                        <select name="user_type" id="">
-                            <option value="admin">Admin</option>
-                            <option value="normal">Normal</option>
+                        <select name="tipo_usuario" id="">
+                            <option value="1">Normal</option>
+                            <option value="2">Admin</option>
                         </select>
                         </label><br>
                     
-                        <input type="submit" value="Registrar nuevo usuario" class="margin-auto text-white padding-10 border-radius-10 border-none bg-primary-orange" style="width: 200px;">
+                        <input type="hidden" name="id_user_to_update" value="'.(isset($usuario_info) ? $_REQUEST['id_user_to_update'] : "").'">
+                        <input type="hidden" name="action" value="'.(isset($usuario_info) ? "update" : "insert").'">
+                        <input type="submit" onclick="return users(\'validateRegister\')" value="'.(isset($usuario_info) ? 'Editar usuario' : 'Registrar nuevo usuario').'" class="margin-auto text-white padding-10 border-radius-10 border-none bg-primary-orange" style="width: 200px; cursor: pointer;">
+                        <span id="message"></span>
                     </form>
                     </div>';                    
                     return $html;
                 break;
                 case 'insert': 
-                    $this->query("insert into usuario set usuario ='".$_REQUEST['category_input']."'");
+                    // TODO: Hacer método global que reciba los campos tabla de parámetro 
+                    $this->query("insert into usuario set 
+                        nombre ='".$_REQUEST['nombre']."', 
+                        apellidos='".$_REQUEST['apellidos']."', 
+                        genero ='".$_REQUEST['genero']."', 
+                        email ='".$_REQUEST['email']."',
+                        clave ='".$_REQUEST['clave']."', 
+                        foto ='".(isset($_REQUEST['foto']) ? $_REQUEST['foto'] : "")."', 
+                        tipo_usuario ='".$_REQUEST['tipo_usuario']."'");
                     $this->action("report");
                 break;
                 case 'update':
-                    $this->query("update usuario set usuario ='".$_REQUEST['category_input']."' where id_usuario=".$_REQUEST['id_user_to_update']);
+                    $this->query("
+                    insert into usuario set 
+                        nombre ='".$_REQUEST['nombre']."', 
+                        apellidos='".$_REQUEST['apellidos']."', 
+                        genero ='".(isset($_REQUEST['genero']) ? $_REQUEST['genero'] : "Otro")."', 
+                        email ='".$_REQUEST['email']."',
+                        clave ='".$_REQUEST['clave']."', 
+                        foto ='".(isset($_REQUEST['foto']) ? $_REQUEST['foto'] : "")."', 
+                        tipo_usuario ='".$_REQUEST['tipo_usuario']."'
+                    where id_usuario=".$_REQUEST['id_user_to_update']);
                     $this->action("report");
                 break;
                 case 'delete':
-                    $this->query("delete from usuario where id_usuario=".$_REQUEST['id_category']); 
+                    $this->query("delete from usuario where id_usuario=".$_REQUEST['id_user']); 
                     $this->action("report"); 
                 break;
                 case 'report':
                     $this->displayData('select * from usuario;');
+                break;
+                default:
+                    echo('Función inválida');
                 break;
             }
 
@@ -92,33 +134,15 @@
                 foreach($row as $columna){
                     $datos.='<td class="text-align-center">'.$columna.'</td>';
                 }
-                // Botón para borrar sin JS
-                // $datos.='
-                // <td> 
-                //     <form method="post">
-                //         <button><i class="fa-regular fa-trash-can"></i></button>
-                //         <input type="hidden" name="action" value="delete">
-                //         <input type="hidden" name="id_category" value="'.$row['id_usuario'].'">
-                //     </form>
-                // </td>';
                 // Botón para borrar con JS
                 $datos.='
                     <td> 
-                        <form method="post">
-                            <button onclick="return confirm(\'¿Deseas borrar el usuario con el correo '.$row['email'].'\')"><i class="fa-regular fa-trash-can"></i></button>
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="id_category" value="'.$row['id_usuario'].'">
-                        </form>
+                        <button onclick="return users(\'delete\', '.$row['id_usuario'].')"><i class="fa-regular fa-trash-can"></i></button>
                     </td> ';
-                // ¿¿¿DÓNDE SE GUARDAN LOS VALORES DE LAS PETICIONES/REQUEST Y CUÁNDO DEJAN DE EXISTIR???
                 // Botón para editar
                 $datos.='
                 <td> 
-                    <form method="post">
-                        <button><i class="fa-solid fa-pen-to-square"></i></button> 
-                        <input type="hidden" name="action" value="formEdit">
-                        <input type="hidden" name="id_category" value="'.$row['id_usuario'].'"> 
-                    </form>
+                    <button onclick="return users(\'formEdit\', '.$row['id_usuario'].')"><i class="fa-solid fa-pen-to-square"></i></button> 
                 </td>';
                 $datos.="</tr>";
             }
