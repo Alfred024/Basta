@@ -5,7 +5,7 @@
     <!-- TODO: En base al botón presionado del NavBar, mostrar la clase -->
     <div id="workArea" class="width-100 height-100">
                 <?php 
-                    include '../classes/class_category.php';
+                    include '../classes/class_user.php';
                 ?>
             </div>
         </main>

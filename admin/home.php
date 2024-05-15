@@ -62,15 +62,3 @@
                     <i class="fa-solid fa-bars text-white"></i>
                 </button>
             </section>
-
-            <!-- TODO: En base al botón presionado del NavBar, mostrar la clase -->
-            <div id="workArea" class="width-100 height-100">
-                <?php 
-                    include '../classes/class_user.php';
-                ?>
-            </div>
-        </main>
-    </div>
-
-</body>
-</html>
