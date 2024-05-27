@@ -52,9 +52,11 @@
 
                 if ($this->registersNum == 1){
                     $data =  $this->getRecord($querySelectUser);
+                    $_SESSION['session_id'] = $data->id_usuario;
                     $_SESSION['session_email'] = $data->email;
                     $_SESSION['session_password'] = $data->clave;
                     $_SESSION['session_username'] = $data->nombre;
+                    $_SESSION['session_photo'] = $data->foto;
 
                     if($data->tipo_usuario = '2'){
                         $_SESSION['admin'] = TRUE;
@@ -71,9 +73,9 @@
                     // echo($data->tipo_usuario);
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),
-                        // '2' => header("location: ../admin/home.php"),
-                        '2' => header("location: ../normal/home.php"),
-                        default => header("location: ../normal/home.php")
+                        '2' => header("location: ../admin/home.php"),
+                        // '2' => header("location: ../normal/home.php"),
+                        default => header("location: ../admin/home.php")
                     };
                 }else{
                     $querySelectUser = "select * from usuario where email='{$email}'";

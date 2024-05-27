@@ -18,11 +18,22 @@
                     onmouseover="this.style.backgroundColor='lightblue';"
                     onmouseout="this.style.backgroundColor='unset';"
                     class="AsideBar-Anchor width-100 text-white anchor-default flex align-center" 
-                    href="">
+                    href="../admin/word.php">
                     <span class="List-Item-Span margin-right-10"></span>
                     <li class="margin-block-10 width-100">
                         <i class="fa-solid fa-p"></i>
                         Palabra
+                    </li>
+               </a>
+               <a 
+                    onmouseover="this.style.backgroundColor='lightblue';"
+                    onmouseout="this.style.backgroundColor='unset';"
+                    class="AsideBar-Anchor width-100 text-white anchor-default flex align-center" 
+                    href="../admin/users.php">
+                    <span class="List-Item-Span margin-right-10"></span>
+                    <li class="margin-block-10 width-100">
+                        <i class="fa-solid fa-users"></i>
+                        Usuarios
                     </li>
                </a>
                <a 
@@ -40,22 +51,11 @@
                     onmouseover="this.style.backgroundColor='lightblue';"
                     onmouseout="this.style.backgroundColor='unset';"
                     class="AsideBar-Anchor width-100 text-white anchor-default flex align-center" 
-                    href="">
+                    href="../admin/tournaments.php">
                     <span class="List-Item-Span margin-right-10"></span>
                     <li class="margin-block-10 width-100">
                         <i class="fa-solid fa-trophy"></i>
                         Torneos
-                    </li>
-               </a>
-               <a 
-                    onmouseover="this.style.backgroundColor='lightblue';"
-                    onmouseout="this.style.backgroundColor='unset';"
-                    class="AsideBar-Anchor width-100 text-white anchor-default flex align-center" 
-                    href="../admin/users.php">
-                    <span class="List-Item-Span margin-right-10"></span>
-                    <li class="margin-block-10 width-100">
-                        <i class="fa-solid fa-users"></i>
-                        Usuarios
                     </li>
                </a>
                <a 
