@@ -51,6 +51,6 @@
 .place-center{
     place-content: center;
 }
-.grid-col-2{
+.grid-2-cols{
     grid-template-columns: repeat(2, auto);
 }

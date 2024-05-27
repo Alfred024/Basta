@@ -67,10 +67,12 @@
                         // Cómo se formaba el id de la foto 
                         
                     }
-
+                    
+                    // echo($data->tipo_usuario);
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),
-                        '2' => header("location: ../admin/home.php"),
+                        // '2' => header("location: ../admin/home.php"),
+                        '2' => header("location: ../normal/home.php"),
                         default => header("location: ../normal/home.php")
                     };
                 }else{

@@ -2,7 +2,7 @@
     session_start();
 
     //echo($_SESSION['admin']);
-    if (!isset($_SESSION['admin'])) {
+    if (!isset($_SESSION['admin']) || !isset($_SESSION['session_email'])) {
         header("location: ../login.php?m=2"); // No tienes acceso a esta página sin un login
     }
 
