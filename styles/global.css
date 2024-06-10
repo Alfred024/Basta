@@ -1,56 +1,96 @@
 /* HOME PAGE CSS */
-.Aside-Bar a, .Aside-Bar ul a:visited, .Aside-Bar ul a:link{
-    color: white !important;
+.Aside-Bar a,
+.Aside-Bar ul a:visited,
+.Aside-Bar ul a:link {
+	color: white !important;
 }
 
 @media (max-width: 750px) {
-	.Nav-Bar-Toogle-Button{
+	.Nav-Bar-Toogle-Button {
 		display: block !important;
 	}
-	.Form-Container > form{
+
+	.Form-Container>form {
 		width: 350px;
 	}
 }
+
 @media (max-width: 700px) {
-    form{
-        width: 400px;
-    }
+	form {
+		width: 400px;
+	}
 }
+
 @media (max-width: 400px) {
-    form{
-        width: 300px;
-    }
+	form {
+		width: 300px;
+	}
 }
 
 /* TABLES CSS */
-.Table{
+.Table {
 	border-collapse: collapse;
 }
-.Table th, .Table tr{
+
+.Table th,
+.Table tr {
 	font-size: 15px;
 	text-align: center;
 	margin-bottom: 30px;
 }
-.Table td, .Table th{
+
+.Table td,
+.Table th {
 	max-width: 100%;
-	padding-block:5px;
+	padding-block: 5px;
 	border-bottom: solid lightblue 1px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.Table thead{
-	background-color: white;
-	position: sticky;
-    inset-block-start: 0;
+	white-space: nowrap;
 }
 
-.justify-start{
+.Table thead {
+	background-color: white;
+	position: sticky;
+	inset-block-start: 0;
+}
+
+.justify-start {
 	justify-content: start;
 }
-.place-center{
-    place-content: center;
+
+.place-center {
+	place-content: center;
 }
-.grid-2-cols{
-    grid-template-columns: repeat(2, auto);
+
+.grid-2-cols {
+	grid-template-columns: repeat(2, auto);
 }
+
+
+.custom-file-upload {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+
+.fotoMedia{
+	width: 90px;
+  }
+  .Perfil{
+	  cursor: pointer;
+	  font-size: 1.1em !important;
+  }
+  .card-1{  background-color: rgba(0, 0, 0, 0.2) !important; 
+	background-image: url(../IMAGES/cielo.jpg) !important;
+  }
+  .card-2{  background-color: rgba(0, 0, 0, 0.2) !important; 
+	background-image: url(../IMAGES/azul1.jpg) !important;
+	background-size: cover;
+  }
+  .card-3{  background-color: rgba(0, 0, 0, 0.2) !important; 
+	background-image: url(../IMAGES/azul2.jpg) !important;
+	background-size: cover;
+  }
+  

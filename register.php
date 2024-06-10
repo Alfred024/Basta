@@ -9,12 +9,12 @@
     $operador1 = $operadores[rand(0,2)];
     $operador2 = $operadores[rand(0,2)];
 
-    $num1 = rand(1,7);
-    $num2 = rand(1,7);
-    $num3 = rand(1,7);
+    $num1 = rand(1,6);
+    $num2 = rand(1,6);
+    $num3 = rand(1,6);
 
     $res = calculateOperation($num1, $num2, $operador1);
-    $res = calculateOperation($res, $num2, $operador2);
+    $res = calculateOperation($res, $num3, $operador2);
 
     $captcha = $num1 . $operador1 . $num2 . $operador2 . $num3;
     return $captcha;
@@ -38,7 +38,6 @@
   $_SESSION['captcha_recoverPwd'] = $resRecoverPwd;
 
   //var_dump($_SESSION);
-  echo('RES REGISTER: '.$resRegister);
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +55,7 @@
     <!-- Para qué era el ?2024.01 ??? -->
     <!-- <script src="./controllers/users.js?2024.01"></script> --> 
 
-    <script src="./controllers/users.js"></script>
+    <script src="./controllers/users.js?v=30"></script>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Ajax -->
@@ -64,7 +63,7 @@
 </head>
 
 <body>
-    <main class="height-100 place-center">
+    <main class="height-100 place-center" style="height: 100vh;">
 
     <form id="form_register" method="post" action="./classes/class_access.php" class="Form padding-10 margin-auto box-shadow-dark flex-column justify-center bg-light-gray border-radius-30" style="width: 420px;">
 				<h4 class="width-fit font-weight-600 margin-auto" >Registro</h4>

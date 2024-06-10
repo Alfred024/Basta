@@ -62,19 +62,15 @@
                         $_SESSION['admin'] = TRUE;
                     }
 
-                    if(!isset($data->foto)){
-                        $_SESSION['session_photo'] = '../files/default-user-profile.svg';
-                        echo('NO HAY UNA FOTO');
-                    }else{
-                        // Cómo se formaba el id de la foto 
-                        
-                    }
+                    // if(isset($data->foto)){
+                    //     $_SESSION['session_photo'] = $data->nombre.'jpg';
+                    // }
                     
                     // echo($data->tipo_usuario);
                     match($data->tipo_usuario){
                         '1' => header("location: ../normal/home.php"),
                         '2' => header("location: ../admin/home.php"),
-                        // '2' => header("location: ../normal/home.php"),
+                        //'2' => header("location: ../normal/home.php"),
                         default => header("location: ../admin/home.php")
                     };
                 }else{
@@ -133,8 +129,6 @@
                 $mail->Port = 465;    
                 $mail->SMTPDebug  = 4;  
                 $mail->SMTPAuth = true;
-                // $mail->Username =   "21030761@itcelaya.edu.mx"; 
-                // $mail->Password = "zuji tall oept ngtq";
                 $mail->Username =   "alfredo.jimeneztellez9@gmail.com"; 
                 $mail->Password = "pbek epkc njxn repo";  
                   
@@ -148,13 +142,13 @@
                 $databaseX->query($query);
                 header("location: ../register.php?m=8"); 
     
-                // if (!$mail->Send()){
-                //     echo  "Error sending the email: " . $mail->ErrorInfo;
-                // } else { 
-                //     $databaseX->query($query);
-                //     // $result=mysqli_query($conexion,$query);
-                //     header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE (m=2 de error)
-                // }
+                if (!$mail->send()){
+                    echo  "Error sending the email: " . $mail->ErrorInfo;
+                } else { 
+                    $databaseX->query($query);
+                    // $result=mysqli_query($conexion,$query);
+                    header("location: ../register.php?m=8"); // MSJ: CORREO ENVIADO CORRECTAMENTE (m=2 de error)
+                }
             }else{
                 header("location: ../register.php?m=1");
             }

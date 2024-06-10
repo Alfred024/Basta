@@ -1,6 +1,9 @@
+<!-- El exámen tendrá que ver con filtros, JS y base de datos -->
 <?php
+    // Esto lo usamos porque cuando disparamos el AJAX no va a reconocer nuestra instancia de sesión que ya existia
+    if(!isset($_SESSION)) session_start();
+    
     include "../classes/class_db.php";
-    // session_start();
 
     class User extends MYSQL_DB{
 
@@ -8,20 +11,23 @@
             $actionReult = "";
 
             switch ($action_case) {
+                case 'profile':
+                    // $admin = $_SESSION['admin'];
+                    $admin = FALSE;
                 case 'formEdit':
                     $usuario_info = $this->getRecord("select * from usuario where id_usuario = " . $_REQUEST['id_user_to_update']);
+                    // echo($usuario_info);
+                    // break;
                 case 'formNew':
                     //var_dump($usuario_info);
                     $html = '
                     <div class="width-100 height-100 flex center-flex-xy">
                     
-                    <!-- <form onsubmit="'.(isset($usuario_info) ? 'return users(\'update\');' : 'return users(\'insert\');').'" id="form_user" class="margin-auto flex-column justify-center" method="post" style="width:350px">  -->
-
                     <form id="form_user" onsubmit="return users(\'inserta\')" class="margin-auto flex-column justify-center" method="post" style="width:350px">
 
-                        <input type="text" name="nombre" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Nombre" value="'.(isset($usuario_info) ? $usuario_info->nombre : '').'">
+                        <input type="text" id="nombre_id" name="nombre" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Nombre" value="'.(isset($usuario_info) ? $usuario_info->nombre : '').'">
                         
-                        <input type="text" name="apellidos" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Apellidos" value="'.(isset($usuario_info) ? $usuario_info->apellidos : '').'">
+                        <input type="text" id="apellidos_id" name="apellidos" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Apellidos" value="'.(isset($usuario_info) ? $usuario_info->apellidos : '').'">
                         
                         <input type="text" id="clave" name="clave" class="margin-bottom-10 box-shadow-light border-radius-10 padding-5 border-none" placeholder="Contraseña" value="'.(isset($usuario_info) ? $usuario_info->clave : '').'">
 
@@ -40,20 +46,20 @@
                             <label for="">Hombre</label>
                         </div>
                 
-                        <!-- TODO: Cómo hago para que  -->
-                        <!-- <label for="">Tipo de usuario
-                        <select name="tipo_usuario" id="">
-                            <option value="admin" <?php (isset($usuario_info) ? ($usuario_info->tipo_usuario == 2 ? "selected" : "") : "") ?>  >Admin</option>
-                            <option value="normal" <?php (isset($usuario_info) ? ($usuario_info->tipo_usuario == 1 ? "selected" : "") : "") ?> >Normal</option>
-                        </select>
-                        </label><br> -->
-
                         <label for="">Tipo de usuario
                         <select name="tipo_usuario" id="">
                             <option value="1">Normal</option>
                             <option value="2">Admin</option>
                         </select>
                         </label><br>
+
+                        <!-- Si es admin no lo deja editar la foto -->
+                        '.(isset($admin) ? "
+                        <div class='flex margin-bottom-10'>
+                            <label class='' for=''>Foto de perfil</label>
+                            <input class='' type='file' name='file_upload' id='file_upload'>
+                        </div>
+                        " : "").'
                     
                         <input type="hidden" name="id_user_to_update" value="'.(isset($usuario_info) ? $_REQUEST['id_user_to_update'] : "").'">
                         <input type="hidden" name="action" value="'.(isset($usuario_info) ? "update" : "insert").'">
@@ -76,6 +82,12 @@
                     $this->action("report");
                 break;
                 case 'update':
+                    // echo('ACTUALIZACIÓN DEL USAURIO');
+                    // if(isset($_FILES['file_upload']['tmp'])){
+                    //     $file = $_FILES['file_upload']['tmp'];
+                    //     $file_type = pathinfo($file, PATHINFO_EXTENSION);
+                    //     move_uploaded_file($file.'.'.$file_type, '../files/profile_pictures');
+                    // }
                     $this->query("
                     update usuario set 
                         nombre ='".$_REQUEST['nombre']."', 
@@ -86,8 +98,17 @@
                         foto ='".(isset($_REQUEST['foto']) ? $_REQUEST['foto'] : "")."', 
                         tipo_usuario ='".$_REQUEST['tipo_usuario']."'
                     where id_usuario=".$_REQUEST['id_user_to_update']);
+
+                    // if(isset($file_type)){
+                    //     $_SESSION[''] = $_POST['nombre_id'].' '.$_POST['apellido_id'];
+                    //     $result = "../files/profile_pictures/'".$file_type."'";
+                    // }
+
                     $this->action("report");
                 break;
+                case 'ranking':
+
+                    break;
                 case 'delete':
                     $this->query("delete from usuario where id_usuario=".$_REQUEST['id_user']); 
                     $this->action("report"); 
@@ -113,7 +134,7 @@
 
             $datos.='
                 <div class="text-white padding-10 width-fit bg-primary-orange flex justify-start" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
-                    <h3 class="margin-right-10">Usuarios</h3> 
+                    <h3 class="margin-right-10">Usuarios2</h3> 
                     <button style="cursor: pointer;" onclick="return users(\'formNew\')" class="bg-bolor-unset border-none text-white"><i class="fa-solid fa-plus"></i></button>
                 </div>';
             

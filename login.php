@@ -9,12 +9,12 @@
     $operador1 = $operadores[rand(0,2)];
     $operador2 = $operadores[rand(0,2)];
 
-    $num1 = rand(1,7);
-    $num2 = rand(1,7);
-    $num3 = rand(1,7);
+    $num1 = rand(1,6);
+    $num2 = rand(1,6);
+    $num3 = rand(1,6);
 
     $res = calculateOperation($num1, $num2, $operador1);
-    $res = calculateOperation($res, $num2, $operador2);
+    $res = calculateOperation($res, $num3, $operador2);
 
     $captcha = $num1 . $operador1 . $num2 . $operador2 . $num3;
     return $captcha;
@@ -37,7 +37,6 @@
   $_SESSION['captcha_recoverPwd'] = $resRecoverPwd;
 
   // var_dump($_SESSION);
-  echo('RES LOGIN: '.$resLogin);
 ?>
 
 <!DOCTYPE html>
@@ -54,10 +53,10 @@
 </head>
 
 <body>
-    <main class="height-100 place-center">
+    <main class="height-100 place-center" style="height: 100vh;">
       <!-- <form onsubmit="return false;" method="post" action="./classes/class_access.php" class="mx-auto p-3"> -->
       <form method="post" action="./classes/class_access.php" class="Form padding-10 margin-auto box-shadow-dark flex-column justify-center bg-light-gray border-radius-30" style="width: 420px;">
-				<h4 class="width-fit font-weight-600 margin-auto" >Inicio de sesión</h4>
+				<h4 class="width-fit font-weight-600 margin-auto" >Inicio de sesión BASTA</h4>
 				<hr style="margin: 10px;">
 
 				<label class="flex-column width-80 margin-auto">

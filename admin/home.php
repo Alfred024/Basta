@@ -59,16 +59,16 @@ if (!isset($_SESSION['admin']) || !isset($_SESSION['session_email'])) {
                         <span class="List-Item-Span margin-right-10"></span>
                         <li class="margin-block-10" style="list-style: none;">
                             <?php
-                            $imagen_path = "../files/profile_pictures/" . $_SESSION['session_id'] . "." . $_SESSION['session_photo'];
-                            if (!is_file($imagen_path)) {
-                                $imagen_path = "../files/default-user-profile.svg";
-                            }
+                                $imagen_path = "../files/profile_pictures/" . $_SESSION['session_id'] . "_" . $_SESSION['session_username'].".jpg";
+                                if (!is_file($imagen_path)) {
+                                    $imagen_path = "../files/default-user-profile.svg";
+                                }
                             ?>
                             <img style="width: 35px;" src="<?php echo $imagen_path; ?>">
                         </li>
                     </a>
 
-                    <h4 class="Page-Title text-white align-self-center margin-left-5">Bienvenido admin<?= $_SESSION['session_username'] ?></h4>
+                    <h4 class="Page-Title text-white align-self-center margin-left-5">Bienvenido <?= $_SESSION['session_username'] ?></h4>
                 </div>
 
                 <button onclick="displayAsideNavBar()" class="Nav-Bar-Toogle-Button bg-bolor-unset border-none margin-right-10 cursor-pointer display-none">
